@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCart } from './CartContext';
 
 interface PizzaCustomizerProps {
@@ -36,6 +36,19 @@ export default function PizzaCustomizer({ isOpen, onClose, pizzaName, baseId }: 
   const [selectedToppings, setSelectedToppings] = useState<string[]>([]);
   const { addToCart } = useCart();
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const currentSize = sizes[selectedSize];
@@ -68,20 +81,28 @@ export default function PizzaCustomizer({ isOpen, onClose, pizzaName, baseId }: 
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-      <div className="bg-gray-900 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4 overflow-y-auto"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
+    >
+      <div className="bg-gray-900 rounded-2xl max-w-4xl w-full my-8" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
-        <div className="sticky top-0 bg-gray-900 border-b border-gray-700 p-6 flex justify-between items-center">
+        <div className="bg-gray-900 border-b border-gray-700 p-6 flex justify-between items-center rounded-t-2xl">
           <h2 className="text-3xl font-bold text-yellow-300">Customize Your {pizzaName}</h2>
           <button
             onClick={onClose}
-            className="text-white hover:text-red-500 text-3xl font-bold"
+            className="text-white hover:text-red-500 text-4xl font-bold leading-none w-10 h-10 flex items-center justify-center"
+            aria-label="Close"
           >
             ×
           </button>
         </div>
 
-        <div className="p-6">
+        <div className="p-6 max-h-[70vh] overflow-y-auto">
           {/* Size Selection */}
           <div className="mb-8">
             <h3 className="text-2xl font-bold text-white mb-4">1. Choose Your Size</h3>
