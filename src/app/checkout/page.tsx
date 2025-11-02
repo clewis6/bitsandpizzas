@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useCart } from '../components/CartContext';
 import { useRouter } from 'next/navigation';
+import { usePeakHours } from '../hooks/usePeakHours';
 
 interface OrderData {
   name: string;
@@ -15,6 +16,7 @@ interface OrderData {
 
 export default function Checkout() {
   const { items, total, clearCart, updateQuantity, removeFromCart } = useCart();
+  const peakStatus = usePeakHours();
   const [orderData, setOrderData] = useState<OrderData>({
     name: '',
     email: '',
@@ -24,6 +26,7 @@ export default function Checkout() {
     specialInstructions: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [orderNumber, setOrderNumber] = useState<string>('');
   const router = useRouter();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -38,26 +41,56 @@ export default function Checkout() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate order processing
-    setTimeout(() => {
-      // Create fake order for admin dashboard
-      const order = {
-        id: `ORDER-${Date.now()}`,
-        items,
-        total,
-        customerInfo: orderData,
-        status: 'received',
-        timestamp: new Date().toISOString()
-      };
+    try {
+      // Submit order to backend API
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          customerName: orderData.name,
+          customerPhone: orderData.phone,
+          items: items.map(item => ({
+            name: item.name,
+            price: item.price
+          })),
+          total: finalTotal,
+          specialInstructions: orderData.specialInstructions,
+          paymentMethod: orderData.paymentMethod
+        })
+      });
 
-      // Store in localStorage for admin dashboard
-      const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
-      localStorage.setItem('orders', JSON.stringify([order, ...existingOrders]));
+      const result = await response.json();
 
-      clearCart();
+      if (result.success) {
+        // Store order number
+        setOrderNumber(result.orderNumber);
+        
+        // Also store in localStorage for admin dashboard
+        const order = {
+          id: result.orderNumber,
+          items,
+          total: finalTotal,
+          customerInfo: orderData,
+          status: 'received',
+          timestamp: new Date().toISOString()
+        };
+        
+        const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
+        localStorage.setItem('orders', JSON.stringify([order, ...existingOrders]));
+
+        clearCart();
+        setIsSubmitting(false);
+        router.push('/admin');
+      } else {
+        alert('Failed to submit order. Please try again or call us at (928) 536-4005');
+        setIsSubmitting(false);
+      }
+    } catch {
+      alert('Error submitting order. Please call us at (928) 536-4005');
       setIsSubmitting(false);
-      router.push('/admin');
-    }, 2000);
+    }
   };
 
   const tax = total * 0.08; // 8% tax
@@ -282,9 +315,18 @@ export default function Checkout() {
               <p className="text-sm text-center mb-2">
                 Pick up your order at 408 S Main Street, Snowflake, AZ 85937
               </p>
-              <p className="text-sm text-center font-bold mb-1">
-                ⏱️ Estimated Pickup Time: 20-45 minutes
-              </p>
+              {!peakStatus.loading && (
+                <>
+                  <p className="text-sm text-center font-bold mb-1">
+                    ⏱️ Estimated Pickup Time: {peakStatus.estimatedTime}
+                  </p>
+                  {peakStatus.isPeak && (
+                    <p className="text-xs text-center text-red-600 font-bold">
+                      🔥 We&apos;re busy right now! ({peakStatus.orderCount} recent orders)
+                    </p>
+                  )}
+                </>
+              )}
               <p className="text-xs text-center">
                 (We&apos;ll call you when your order is ready!)
               </p>
