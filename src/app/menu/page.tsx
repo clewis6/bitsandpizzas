@@ -4,107 +4,111 @@ import MenuItemCard from '../components/MenuItemCard';
 
 // Real Bits & Pizzas menu data based on actual menu photos
 const menuItems = [
-  // PIZZA - Traditional Cheese Pizza
+  // PIZZA - Traditional Cheese Pizza (all sizes)
   {
-    id: '1',
+    id: 'cheese-pizza',
     name: 'Traditional Cheese Pizza',
-    description: '10" Small $9.99 | 12" Medium $11.99 | 14" Large $15.99 | 16" X-Large $17.99 | 18" Family $23.99',
-    price: 11.99,
+    description: 'Classic cheese pizza with our signature sauce and mozzarella',
+    price: 9.99,
     image: '/api/placeholder/300/200',
     isPopular: true,
-    category: 'Pizza'
-  },
-  {
-    id: '2',
-    name: 'Each Topping',
-    description: 'Small $1.10 | Medium $1.49 | Large $1.99 | X-Large $1.99 | Family $2.49',
-    price: 1.49,
-    image: '/api/placeholder/300/200',
-    category: 'Pizza'
-  },
-  
-  // SPECIALTY PIZZAS (6 toppings)
-  {
-    id: '3',
-    name: 'Specialty Pizza',
-    description: 'Choice of 6 toppings. 10" Small $14.99 | 12" Medium $18.49 | 14" Large $21.99 | 16" X-Large $23.99',
-    price: 18.49,
-    image: '/api/placeholder/300/200',
-    category: 'Specialty Pizzas'
+    category: 'Pizza',
+    sizes: {
+      small: { size: '10"', price: 9.99 },
+      medium: { size: '12"', price: 11.99 },
+      large: { size: '14"', price: 15.99 },
+      xlarge: { size: '16"', price: 17.99 },
+      family: { size: '18"', price: 23.99 }
+    }
   },
   
   // PIZZA BY THE SLICE
   {
-    id: '4',
+    id: 'pizza-slice',
     name: 'Pizza By the Slice',
-    description: 'Single slice of cheese pizza - perfect for a quick bite!',
+    description: 'Pepperoni slice - Perfect for a quick bite!',
     price: 3.50,
     image: '/api/placeholder/300/200',
     isPopular: true,
     category: 'Pizza'
   },
+  
+  // LUNCH SPECIAL
   {
-    id: '5',
-    name: 'Lunch Special',
-    description: 'One slice and a small drink',
+    id: 'lunch-special',
+    name: 'Daily Lunch Special',
+    description: 'Slice of Pepperoni Pizza and a Drink - Available daily!',
     price: 5.00,
     image: '/api/placeholder/300/200',
     isPopular: true,
     category: 'Daily Specials'
   },
 
-  // SPECIALTY PIZZAS - Named varieties
+  // SPECIALTY PIZZAS
   {
-    id: '6',
-    name: 'Bits Chicken Wing Pizza (5 toppings)',
-    description: 'Chicken and Bacon, your choice BBQ or Hot! 12" Medium $14.99 | 14" Large $18.99 | 16" X-Large $19.99',
+    id: 'bits-chicken-wing',
+    name: 'Bits Chicken Wing Pizza',
+    description: 'Chicken and Bacon, your choice BBQ or Hot! (5 toppings)',
     price: 14.99,
     image: '/api/placeholder/300/200',
     isPopular: true,
-    category: 'Specialty Pizzas'
+    category: 'Specialty Pizzas',
+    sizes: {
+      medium: { size: '12"', price: 14.99 },
+      large: { size: '14"', price: 18.99 },
+      xlarge: { size: '16"', price: 19.99 }
+    }
   },
   {
-    id: '7',
-    name: 'Meat Lovers Pizza (6 toppings)',
-    description: 'Pepperoni, Ham, Sausage, Ground Beef. 12" Medium $15.99 | 14" Large $19.99 | 16" X-Large $22.99 | 18" Family $26.49',
+    id: 'meat-lovers',
+    name: 'Meat Lovers Pizza',
+    description: 'Pepperoni, Ham, Sausage, Ground Beef (6 toppings)',
     price: 15.99,
     image: '/api/placeholder/300/200',
     isPopular: true,
-    category: 'Specialty Pizzas'
+    category: 'Specialty Pizzas',
+    sizes: {
+      medium: { size: '12"', price: 15.99 },
+      large: { size: '14"', price: 19.99 },
+      xlarge: { size: '16"', price: 22.99 },
+      family: { size: '18"', price: 26.49 }
+    }
   },
   {
-    id: '8',
-    name: 'Vegetarian Pizza (6 toppings)',
-    description: 'Black Olives, Green Olives, Red Onion, Bell Pepper, Tomatoes, Mushrooms. 12" Medium $15.99 | 14" Large $19.99 | 16" X-Large $22.99 | 18" Family $26.49',
+    id: 'vegetarian',
+    name: 'Vegetarian Pizza',
+    description: 'Black Olives, Green Olives, Red Onion, Bell Pepper, Tomatoes, Mushrooms (6 toppings)',
     price: 15.99,
     image: '/api/placeholder/300/200',
-    category: 'Specialty Pizzas'
+    category: 'Specialty Pizzas',
+    sizes: {
+      medium: { size: '12"', price: 15.99 },
+      large: { size: '14"', price: 19.99 },
+      xlarge: { size: '16"', price: 22.99 },
+      family: { size: '18"', price: 26.49 }
+    }
   },
   {
-    id: '9',
-    name: 'Supreme Pizza (8 toppings)',
-    description: 'Pepperoni, Ham, Sausage, Ground Beef, Black Olives, Green Olives, Bell Pepper, Mushrooms. 12" Medium $17.99 | 14" Large $21.99 | 16" X-Large $24.99 | 18" Family $29.99',
+    id: 'supreme',
+    name: 'Supreme Pizza',
+    description: 'Pepperoni, Ham, Sausage, Ground Beef, Black Olives, Green Olives, Bell Pepper, Mushrooms (8 toppings)',
     price: 17.99,
     image: '/api/placeholder/300/200',
     isPopular: true,
-    category: 'Specialty Pizzas'
-  },
-  
-  // TOPPINGS
-  {
-    id: '10',
-    name: 'Available Toppings',
-    description: 'Pepperoni, Sausage, Ground Beef, Ham, Bacon, Chicken, Green Chile, Jalapeños, Black Olives, Green Olives, Mushrooms, Bell Pepper, Pineapple, Tomato, Red Onion, Mushrooms',
-    price: 0,
-    image: '/api/placeholder/300/200',
-    category: 'Pizza'
+    category: 'Specialty Pizzas',
+    sizes: {
+      medium: { size: '12"', price: 17.99 },
+      large: { size: '14"', price: 21.99 },
+      xlarge: { size: '16"', price: 24.99 },
+      family: { size: '18"', price: 29.99 }
+    }
   },
 
   // WINGS
   {
-    id: '11',
-    name: 'Hot Wings (Sauce: BBQ or Teriyaki)',
-    description: 'Delicious wings with your choice of sauce.',
+    id: 'hot-wings',
+    name: 'Hot Wings',
+    description: 'BBQ or Teriyaki sauce - $1.40 each',
     price: 1.40,
     image: '/api/placeholder/300/200',
     isPopular: true,
@@ -113,36 +117,44 @@ const menuItems = [
 
   // BREADSTIX
   {
-    id: '12',
+    id: 'regular-breadstix',
     name: 'Regular Cinnamon Breadstix',
-    description: 'Small $5.99 | Large $7.99',
+    description: 'Fresh baked breadstix with cinnamon',
     price: 5.99,
     image: '/api/placeholder/300/200',
     isPopular: true,
-    category: 'Breadstix'
+    category: 'Breadstix',
+    sizes: {
+      small: { price: 5.99 },
+      large: { price: 7.99 }
+    }
   },
   {
-    id: '13',
+    id: 'cheese-breadstix',
     name: 'Cheese Breadstix',
-    description: 'Small $8.99 | Large $10.99',
+    description: 'Our famous breadsticks topped with melted cheese',
     price: 8.99,
     image: '/api/placeholder/300/200',
-    category: 'Breadstix'
+    category: 'Breadstix',
+    sizes: {
+      small: { price: 8.99 },
+      large: { price: 10.99 }
+    }
   },
 
   // SALADS
   {
-    id: '14',
+    id: 'tossed-salad',
     name: 'Tossed Green Salad',
-    description: 'Fresh mixed greens with vegetables.',
+    description: 'Fresh mixed greens with vegetables and your choice of dressing',
     price: 3.99,
     image: '/api/placeholder/300/200',
     category: 'Salads'
   },
   {
-    id: '15',
+    id: 'chef-salad',
     name: 'Zesty Chef Salad',
-    description: 'Loaded with meats, cheese, and fresh vegetables.',
+    description: 'Loaded with meats, cheese, and fresh vegetables',
     price: 9.49,
     image: '/api/placeholder/300/200',
     category: 'Salads'
@@ -150,27 +162,35 @@ const menuItems = [
 
   // SUBS
   {
-    id: '16',
+    id: 'ny-special',
     name: 'New York Special Sub',
-    description: 'Pepperoni, Ham, Salami and Sausage. Small $7.99 | Large $9.99',
+    description: 'Pepperoni, Ham, Salami and Sausage',
     price: 7.99,
     image: '/api/placeholder/300/200',
-    category: 'Subs'
+    category: 'Subs',
+    sizes: {
+      small: { price: 7.99 },
+      large: { price: 9.99 }
+    }
   },
   {
-    id: '17',
+    id: 'single-meat-sub',
     name: 'Ham, Salami, or Pepperoni Sub',
-    description: 'Your choice of meat. Small $6.99 | Large $8.99',
+    description: 'Your choice of one meat',
     price: 6.99,
     image: '/api/placeholder/300/200',
-    category: 'Subs'
+    category: 'Subs',
+    sizes: {
+      small: { price: 6.99 },
+      large: { price: 8.99 }
+    }
   },
 
   // CALZONES
   {
-    id: '18',
+    id: 'calzone',
     name: 'Calzone',
-    description: 'Choice of 3 Toppings',
+    description: 'Choice of 3 Toppings - folded and baked to perfection',
     price: 7.99,
     image: '/api/placeholder/300/200',
     category: 'Calzones'
@@ -178,7 +198,7 @@ const menuItems = [
 
   // PIZZA BOAT
   {
-    id: '19',
+    id: 'pizza-boat',
     name: 'Pizza Boat',
     description: 'Like our personal size pizza but in a boat! Choice of 2 Toppings',
     price: 7.99,
@@ -188,9 +208,9 @@ const menuItems = [
 
   // RIP & DIP
   {
-    id: '20',
+    id: 'rip-dip',
     name: 'Rip & Dip',
-    description: 'Choice of 1 Topping',
+    description: 'Choice of 1 Topping with dipping sauce',
     price: 7.99,
     image: '/api/placeholder/300/200',
     category: 'Rip & Dip'
@@ -198,17 +218,33 @@ const menuItems = [
 
   // SODA BAR
   {
-    id: '21',
-    name: 'Soda Bar',
-    description: 'Small $1.39 | Medium $1.69 | Large $1.99 | X-Large $2.19 | Commercial Mug $0.99 | 20 oz. Sodas $3.39 | 2 Liter Sodas $3.99',
+    id: 'soda',
+    name: 'Fountain Drinks',
+    description: 'Coca-Cola products - Small $1.39 | Medium $1.69 | Large $1.99 | X-Large $2.19',
     price: 1.69,
     image: '/api/placeholder/300/200',
     category: 'Beverages'
   },
-
-  // DAILY SPECIALS (from board in photo)
   {
-    id: '22',
+    id: 'bottle-soda',
+    name: '20 oz. Bottled Sodas',
+    description: 'Variety of bottled beverages',
+    price: 3.39,
+    image: '/api/placeholder/300/200',
+    category: 'Beverages'
+  },
+  {
+    id: '2-liter',
+    name: '2 Liter Sodas',
+    description: 'Take home a 2 liter',
+    price: 3.99,
+    image: '/api/placeholder/300/200',
+    category: 'Beverages'
+  },
+
+  // DAILY SPECIALS (from board)
+  {
+    id: 'monday-special',
     name: 'Monday Special',
     description: 'Family Size One Item Pizza',
     price: 18.99,
@@ -216,7 +252,7 @@ const menuItems = [
     category: 'Daily Specials'
   },
   {
-    id: '23',
+    id: 'tuesday-special',
     name: 'Tuesday Special',
     description: 'Medium Supreme Pizza and an Ex-Large One Item Pizza',
     price: 32.99,
@@ -224,7 +260,7 @@ const menuItems = [
     category: 'Daily Specials'
   },
   {
-    id: '24',
+    id: 'wednesday-special',
     name: 'Wednesday Special',
     description: 'Two Medium One Item Pizzas',
     price: 18.99,
@@ -232,7 +268,7 @@ const menuItems = [
     category: 'Daily Specials'
   },
   {
-    id: '25',
+    id: 'thursday-special',
     name: 'Thursday Special',
     description: 'Ex-Large One Item Pizza',
     price: 16.99,
@@ -240,7 +276,7 @@ const menuItems = [
     category: 'Daily Specials'
   },
   {
-    id: '26',
+    id: 'friday-special',
     name: 'Friday Special',
     description: 'Family Size One Item Pizza',
     price: 18.99,
@@ -248,7 +284,7 @@ const menuItems = [
     category: 'Daily Specials'
   },
   {
-    id: '27',
+    id: 'saturday-special',
     name: 'Saturday Special',
     description: 'Ex-Large One Item Pizza',
     price: 16.99,
@@ -258,10 +294,22 @@ const menuItems = [
 ];
 
 export default function Menu() {
-  const categories = ['Pizza', 'Specialty Pizzas', 'Wings', 'Breadstix', 'Salads', 'Subs', 'Calzones', 'Pizza Boat', 'Rip & Dip', 'Beverages', 'Daily Specials'];
+  const categories = [
+    { name: 'Pizza', icon: '🍕', description: 'Build your own or grab a slice!' },
+    { name: 'Specialty Pizzas', icon: '⭐', description: 'Our signature combinations' },
+    { name: 'Daily Specials', icon: '🎉', description: 'Amazing deals every day' },
+    { name: 'Wings', icon: '🍗', description: 'Hot, BBQ, or Teriyaki' },
+    { name: 'Breadstix', icon: '🥖', description: 'Fresh baked goodness' },
+    { name: 'Salads', icon: '🥗', description: 'Fresh and crisp' },
+    { name: 'Subs', icon: '🥪', description: 'Loaded with flavor' },
+    { name: 'Calzones', icon: '🌮', description: 'Folded and delicious' },
+    { name: 'Pizza Boat', icon: '⛵', description: 'Personal pizza in a boat' },
+    { name: 'Rip & Dip', icon: '🍴', description: 'Perfect for sharing' },
+    { name: 'Beverages', icon: '🥤', description: 'Ice cold drinks' }
+  ];
   
-  const getItemsByCategory = (category: string) => {
-    return menuItems.filter(item => item.category === category);
+  const getItemsByCategory = (categoryName: string) => {
+    return menuItems.filter(item => item.category === categoryName);
   };
 
   return (
@@ -286,14 +334,22 @@ export default function Menu() {
 
         {/* Menu Categories */}
         {categories.map((category) => {
-          const categoryItems = getItemsByCategory(category);
+          const categoryItems = getItemsByCategory(category.name);
           if (categoryItems.length === 0) return null;
           
           return (
-            <div key={category} className="mb-16">
-              <h2 className="text-4xl font-bold text-yellow-300 mb-8 text-center">
-                {category}
-              </h2>
+            <div key={category.name} className="mb-20">
+              {/* Category Header */}
+              <div className="text-center mb-10">
+                <div className="inline-block bg-gray-900 rounded-2xl px-8 py-4 shadow-xl">
+                  <div className="text-5xl mb-2">{category.icon}</div>
+                  <h2 className="text-4xl font-bold text-yellow-300 mb-2">
+                    {category.name}
+                  </h2>
+                  <p className="text-gray-400">{category.description}</p>
+                </div>
+              </div>
+              
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {categoryItems.map((item) => (
                   <MenuItemCard
@@ -304,6 +360,7 @@ export default function Menu() {
                     price={item.price}
                     image={item.image}
                     isPopular={item.isPopular}
+                    category={item.category}
                   />
                 ))}
               </div>
@@ -311,33 +368,67 @@ export default function Menu() {
           );
         })}
 
-        {/* Hours & Contact Info */}
-        <div className="mt-16 bg-gray-900 rounded-2xl p-8">
-          <h2 className="text-3xl font-bold mb-6 text-yellow-300 text-center">
-            Hours & Daily Specials
+        {/* Hours & Info */}
+        <div className="mt-20 bg-gray-900 rounded-2xl p-8 shadow-xl">
+          <h2 className="text-3xl font-bold mb-8 text-yellow-300 text-center">
+            📍 Visit Us in Snowflake, Arizona
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <div>
+            <div className="bg-gray-800 rounded-xl p-6">
               <h3 className="text-2xl font-bold mb-4 text-yellow-300">🕐 Hours</h3>
               <ul className="text-gray-300 space-y-2">
-                <li>• Monday-Thursday: 11am - 9pm</li>
-                <li>• Friday-Saturday: 11am - 9pm</li>
-                <li>• Birthday Parties & Game Room Available</li>
-                <li>• Daily Specials</li>
+                <li className="flex justify-between">
+                  <span>Monday - Thursday:</span>
+                  <span className="font-bold">11am - 9pm</span>
+                </li>
+                <li className="flex justify-between">
+                  <span>Friday - Saturday:</span>
+                  <span className="font-bold">11am - 9pm</span>
+                </li>
+                <li className="text-yellow-300 mt-4">🎮 Game Room Available</li>
+                <li className="text-yellow-300">🎉 Birthday Parties Welcome</li>
               </ul>
             </div>
             
-            <div>
-              <h3 className="text-2xl font-bold mb-4 text-yellow-300">🌟 Daily Specials</h3>
-              <ul className="text-gray-300 space-y-2">
-                <li>• Monday: Family Size Pizza Deal</li>
-                <li>• Tuesday: Extra Large Pizza Special</li>
-                <li>• Wednesday: Two Medium Pizza Deal</li>
-                <li>• Thursday: Extra Large Pizza + 2 Items</li>
-                <li>• Friday: Family Size Pizza Special</li>
-                <li>• Daily Lunch Special: Slice of Pizza and a Drink</li>
+            <div className="bg-gray-800 rounded-xl p-6">
+              <h3 className="text-2xl font-bold mb-4 text-yellow-300">📞 Contact</h3>
+              <ul className="text-gray-300 space-y-3">
+                <li className="text-lg">
+                  <span className="text-yellow-300">Phone:</span><br/>
+                  <a href="tel:9285364005" className="font-bold hover:text-yellow-300">(928) 536-4005</a>
+                </li>
+                <li className="text-lg">
+                  <span className="text-yellow-300">Address:</span><br/>
+                  <span className="font-bold">408 South Main Street</span><br/>
+                  <span>Snowflake, AZ 85937</span>
+                </li>
               </ul>
             </div>
+          </div>
+          
+          {/* Available Toppings */}
+          <div className="mt-8 bg-gray-800 rounded-xl p-6">
+            <h3 className="text-2xl font-bold mb-4 text-yellow-300 text-center">🍕 Available Toppings</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-gray-300">
+              <div>• Pepperoni</div>
+              <div>• Sausage</div>
+              <div>• Ground Beef</div>
+              <div>• Ham</div>
+              <div>• Bacon</div>
+              <div>• Chicken</div>
+              <div>• Green Chile</div>
+              <div>• Jalapeños</div>
+              <div>• Black Olives</div>
+              <div>• Green Olives</div>
+              <div>• Mushrooms</div>
+              <div>• Bell Pepper</div>
+              <div>• Pineapple</div>
+              <div>• Tomato</div>
+              <div>• Red Onion</div>
+            </div>
+            <p className="text-center text-yellow-300 mt-4 font-bold">
+              Small +$1.10 | Medium +$1.49 | Large +$1.99 | X-Large +$1.99 | Family +$2.49
+            </p>
           </div>
         </div>
 
