@@ -281,7 +281,16 @@ export default function Admin() {
         {/* Quick Actions */}
         <div className="mt-12 bg-gray-900 rounded-xl p-6">
           <h3 className="text-2xl font-bold text-yellow-300 mb-4">Quick Actions</h3>
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-4 gap-4">
+            <a
+              href="/admin/print"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-bold transition-colors text-center"
+            >
+              🖨️ Open Print Station
+            </a>
+            
             <button 
               onClick={() => {
                 localStorage.removeItem('orders');
@@ -296,7 +305,7 @@ export default function Admin() {
               📊 View Reports
             </button>
             
-            <button className="bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-bold transition-colors">
+            <button className="bg-gray-600 hover:bg-gray-700 text-white py-3 rounded-lg font-bold transition-colors">
               ⚙️ Settings
             </button>
           </div>
@@ -305,7 +314,7 @@ export default function Admin() {
         {/* Footer Info */}
         <div className="mt-8 text-center text-gray-400">
           <p>Kitchen Dashboard - Auto-refreshes every 5 seconds</p>
-          <p className="text-sm">🎭 Demo Mode - No real orders being processed</p>
+          <p className="text-sm">💡 Open Print Station on a device connected to your printer</p>
         </div>
       </div>
     </div>
