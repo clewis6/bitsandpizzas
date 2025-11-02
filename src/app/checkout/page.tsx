@@ -1,9 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCart } from '../components/CartContext';
 import { useRouter } from 'next/navigation';
 import { usePeakHours } from '../hooks/usePeakHours';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import CardPaymentForm from '../components/CardPaymentForm';
+
+// Initialize Stripe - replace with your publishable key
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || 'pk_test_51QRmf9P3EIyW7kqPi8qm3BWcHxL4r1XKa99yz2o5O87R6Lw8HRUmHGg2l7z3FNKz5KFa5N5qxVkN8Y3gO0lL0D4I00R7n8g7gZ');
 
 interface OrderData {
   name: string;
@@ -26,8 +32,26 @@ export default function Checkout() {
     specialInstructions: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [orderNumber, setOrderNumber] = useState<string>('');
+  const [showCardPayment, setShowCardPayment] = useState(false);
+  const [clientSecret, setClientSecret] = useState('');
   const router = useRouter();
+  
+  const tax = total * 0.08; // 8% tax
+  const finalTotal = total + tax;
+
+  // Create payment intent when card payment is selected
+  useEffect(() => {
+    if (orderData.paymentMethod === 'card' && !clientSecret && finalTotal > 0) {
+      fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: finalTotal }),
+      })
+        .then((res) => res.json())
+        .then((data) => setClientSecret(data.clientSecret))
+        .catch((error) => console.error('Error creating payment intent:', error));
+    }
+  }, [orderData.paymentMethod, finalTotal, clientSecret]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -64,9 +88,6 @@ export default function Checkout() {
       const result = await response.json();
 
       if (result.success) {
-        // Store order number
-        setOrderNumber(result.orderNumber);
-        
         // Also store in localStorage for admin dashboard
         const order = {
           id: result.orderNumber,
@@ -93,8 +114,10 @@ export default function Checkout() {
     }
   };
 
-  const tax = total * 0.08; // 8% tax
-  const finalTotal = total + tax;
+  const handleCardPaymentSuccess = async () => {
+    // After card payment succeeds, submit the order
+    await handleSubmit(new Event('submit') as unknown as React.FormEvent);
+  };
 
   if (items.length === 0) {
     return (
