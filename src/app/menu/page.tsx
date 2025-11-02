@@ -453,14 +453,11 @@ export default function Menu() {
         {/* Info Section */}
         <div className="mt-16 grid md:grid-cols-2 gap-8">
           <div className="bg-gray-900 p-6 rounded-xl">
-            <h3 className="text-2xl font-bold mb-4 text-yellow-300">🏃 Smart Pickup Times</h3>
-            <ul className="text-gray-300 space-y-2 text-sm">
-              <li>• <strong>Very Quiet</strong> (0-2 orders): 20-25 minutes</li>
-              <li>• <strong>Steady</strong> (3-5 orders): 25-30 minutes</li>
-              <li>• <strong>Busy</strong> (6-9 orders): 30-35 minutes</li>
-              <li>• <strong>Peak</strong> (10-14 orders): 40-45 minutes</li>
-              <li>• <strong>Very Busy</strong> (15+ orders): 45-50 minutes</li>
-              <li className="text-yellow-300 pt-2">⏱️ Real-time estimate shown at checkout!</li>
+            <h3 className="text-2xl font-bold mb-4 text-yellow-300">📍 Location</h3>
+            <ul className="text-gray-300 space-y-2">
+              <li>• 408 South Main Street</li>
+              <li>• Snowflake, AZ 85937</li>
+              <li>• Pickup orders only</li>
             </ul>
           </div>
           
