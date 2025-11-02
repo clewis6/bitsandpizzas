@@ -27,7 +27,7 @@ const menuItems = [
     id: 'pizza-slice',
     name: 'Pizza By the Slice',
     description: 'Pepperoni slice - Perfect for a quick bite!',
-    price: 3.50,
+    price: 2.50,
     image: '/api/placeholder/300/200',
     isPopular: true,
     category: 'Pizza'
@@ -38,7 +38,7 @@ const menuItems = [
     id: 'lunch-special',
     name: 'Daily Lunch Special',
     description: 'Slice of Pepperoni Pizza and a Drink - Available daily!',
-    price: 5.00,
+    price: 3.50,
     image: '/api/placeholder/300/200',
     isPopular: true,
     category: 'Daily Specials'
@@ -256,7 +256,7 @@ const menuItems = [
     id: 'tuesday-special',
     name: 'Tuesday Special',
     description: 'Medium Supreme Pizza and an Ex-Large One Item Pizza',
-    price: 32.99,
+    price: 25.99,
     image: '/api/placeholder/300/200',
     category: 'Daily Specials'
   },
