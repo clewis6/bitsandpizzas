@@ -1,7 +1,9 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import { useCart } from './CartContext';
+import PizzaCustomizer from './PizzaCustomizer';
 
 interface MenuItemCardProps {
   id: string;
@@ -23,9 +25,16 @@ export default function MenuItemCard({
   category
 }: MenuItemCardProps) {
   const { addToCart } = useCart();
+  const [showCustomizer, setShowCustomizer] = useState(false);
+
+  const isPizza = category === 'Pizza' || category === 'Specialty Pizzas';
 
   const handleAddToCart = () => {
     addToCart({ id, name, price, image });
+  };
+
+  const handleCustomize = () => {
+    setShowCustomizer(true);
   };
 
   return (
@@ -49,19 +58,41 @@ export default function MenuItemCard({
         <h3 className="text-xl font-bold mb-2 text-yellow-300">{name}</h3>
         <p className="text-gray-300 mb-4 text-sm">{description}</p>
         
-        <div className="flex justify-between items-center">
-          <span className="text-2xl font-bold text-white">
-            ${price.toFixed(2)}
-          </span>
-          
-          <button
-            onClick={handleAddToCart}
-            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-bold transition-colors duration-300 hover:scale-105"
-          >
-            Add to Cart 🍕
-          </button>
-        </div>
+        {isPizza ? (
+          <div className="space-y-3">
+            <div className="text-sm text-gray-400">Starting at ${price.toFixed(2)}</div>
+            <button
+              onClick={handleCustomize}
+              className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg font-bold transition-all duration-300 hover:scale-105"
+            >
+              Customize Pizza 🍕
+            </button>
+          </div>
+        ) : (
+          <div className="flex justify-between items-center">
+            <span className="text-2xl font-bold text-white">
+              ${price.toFixed(2)}
+            </span>
+            
+            <button
+              onClick={handleAddToCart}
+              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-bold transition-colors duration-300 hover:scale-105"
+            >
+              Add to Cart 🛒
+            </button>
+          </div>
+        )}
       </div>
+
+      {/* Pizza Customizer Modal */}
+      {isPizza && (
+        <PizzaCustomizer
+          isOpen={showCustomizer}
+          onClose={() => setShowCustomizer(false)}
+          pizzaName={name}
+          baseId={id}
+        />
+      )}
     </div>
   );
 }
