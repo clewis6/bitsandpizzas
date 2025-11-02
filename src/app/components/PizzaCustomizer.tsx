@@ -8,6 +8,8 @@ interface PizzaCustomizerProps {
   onClose: () => void;
   pizzaName: string;
   baseId: string;
+  isSpecial?: boolean;
+  specialPrice?: number;
 }
 
 interface Size {
@@ -31,10 +33,14 @@ const availableToppings = [
   'Mushrooms', 'Bell Pepper', 'Pineapple', 'Tomato', 'Red Onion'
 ];
 
-export default function PizzaCustomizer({ isOpen, onClose, pizzaName, baseId }: PizzaCustomizerProps) {
+export default function PizzaCustomizer({ isOpen, onClose, pizzaName, baseId, isSpecial = false, specialPrice }: PizzaCustomizerProps) {
   const [selectedSize, setSelectedSize] = useState<number>(1); // Default to Medium
   const [selectedToppings, setSelectedToppings] = useState<string[]>([]);
   const { addToCart } = useCart();
+
+  // For daily specials, limit to 1 topping and use fixed price
+  const maxToppings = isSpecial ? 1 : 999;
+  const useFixedPrice = isSpecial && specialPrice !== undefined;
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -52,20 +58,27 @@ export default function PizzaCustomizer({ isOpen, onClose, pizzaName, baseId }: 
   if (!isOpen) return null;
 
   const currentSize = sizes[selectedSize];
-  const totalPrice = currentSize.basePrice + (selectedToppings.length * currentSize.toppingPrice);
+  const totalPrice = useFixedPrice 
+    ? specialPrice! 
+    : currentSize.basePrice + (selectedToppings.length * currentSize.toppingPrice);
 
   const toggleTopping = (topping: string) => {
     if (selectedToppings.includes(topping)) {
       setSelectedToppings(selectedToppings.filter(t => t !== topping));
     } else {
-      setSelectedToppings([...selectedToppings, topping]);
+      // For daily specials, only allow 1 topping
+      if (isSpecial) {
+        setSelectedToppings([topping]);
+      } else {
+        setSelectedToppings([...selectedToppings, topping]);
+      }
     }
   };
 
   const handleAddToCart = () => {
     const customPizzaName = selectedToppings.length > 0
-      ? `${currentSize.name} ${pizzaName} + ${selectedToppings.join(', ')}`
-      : `${currentSize.name} ${pizzaName}`;
+      ? `${isSpecial ? pizzaName : currentSize.name + ' ' + pizzaName} + ${selectedToppings.join(', ')}`
+      : `${isSpecial ? pizzaName : currentSize.name + ' ' + pizzaName}`;
 
     addToCart({
       id: `${baseId}-${Date.now()}`,
@@ -76,7 +89,9 @@ export default function PizzaCustomizer({ isOpen, onClose, pizzaName, baseId }: 
 
     // Reset and close
     setSelectedToppings([]);
-    setSelectedSize(1);
+    if (!isSpecial) {
+      setSelectedSize(1);
+    }
     onClose();
   };
 
@@ -98,10 +113,11 @@ export default function PizzaCustomizer({ isOpen, onClose, pizzaName, baseId }: 
         </div>
 
         <div className="container mx-auto px-4 py-8 max-w-6xl">
-          {/* Size Selection */}
-          <div className="mb-10">
-            <h3 className="text-3xl font-bold text-white mb-6 text-center">1. Choose Your Size</h3>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-4xl mx-auto">
+          {/* Size Selection - Hide for daily specials */}
+          {!isSpecial && (
+            <div className="mb-10">
+              <h3 className="text-3xl font-bold text-white mb-6 text-center">1. Choose Your Size</h3>
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-4xl mx-auto">
               {sizes.map((size, index) => (
                 <button
                   key={index}
@@ -123,15 +139,22 @@ export default function PizzaCustomizer({ isOpen, onClose, pizzaName, baseId }: 
               ))}
             </div>
           </div>
+          )}
 
           {/* Toppings Selection */}
           <div className="mb-10">
             <h3 className="text-3xl font-bold text-white mb-3 text-center">
-              2. Add Toppings ({selectedToppings.length} selected)
+              {isSpecial ? 'Choose Your One Topping' : `${!isSpecial ? '2. ' : ''}Add Toppings (${selectedToppings.length} selected)`}
             </h3>
-            <p className="text-gray-400 mb-6 text-center text-lg">
-              ${currentSize.toppingPrice.toFixed(2)} per topping for {currentSize.name} size
-            </p>
+            {isSpecial ? (
+              <p className="text-gray-400 mb-6 text-center text-lg">
+                This special includes one topping of your choice - Fixed price ${specialPrice?.toFixed(2)}
+              </p>
+            ) : (
+              <p className="text-gray-400 mb-6 text-center text-lg">
+                ${currentSize.toppingPrice.toFixed(2)} per topping for {currentSize.name} size
+              </p>
+            )}
             
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-5xl mx-auto">
               {availableToppings.map((topping) => (
@@ -159,11 +182,11 @@ export default function PizzaCustomizer({ isOpen, onClose, pizzaName, baseId }: 
             
             <div className="space-y-2 mb-4">
               <div className="flex justify-between text-gray-300">
-                <span>{currentSize.name} {pizzaName} ({currentSize.size})</span>
-                <span>${currentSize.basePrice.toFixed(2)}</span>
+                <span>{isSpecial ? pizzaName : `${currentSize.name} ${pizzaName} (${currentSize.size})`}</span>
+                <span>${useFixedPrice ? specialPrice!.toFixed(2) : currentSize.basePrice.toFixed(2)}</span>
               </div>
               
-              {selectedToppings.length > 0 && (
+              {!isSpecial && selectedToppings.length > 0 && (
                 <div className="flex justify-between text-gray-300">
                   <span>{selectedToppings.length} Extra Topping{selectedToppings.length > 1 ? 's' : ''}</span>
                   <span>${(selectedToppings.length * currentSize.toppingPrice).toFixed(2)}</span>
@@ -173,6 +196,12 @@ export default function PizzaCustomizer({ isOpen, onClose, pizzaName, baseId }: 
               {selectedToppings.length > 0 && (
                 <div className="text-sm text-gray-400 pl-4">
                   {selectedToppings.join(', ')}
+                </div>
+              )}
+              
+              {isSpecial && selectedToppings.length === 0 && (
+                <div className="text-yellow-300 text-sm text-center py-2">
+                  ⚠️ Please select your one topping
                 </div>
               )}
             </div>
@@ -197,7 +226,14 @@ export default function PizzaCustomizer({ isOpen, onClose, pizzaName, baseId }: 
             </button>
             <button
               onClick={handleAddToCart}
-              className="flex-1 bg-red-600 hover:bg-red-700 text-white py-5 rounded-xl font-bold text-xl transition-all duration-300 hover:scale-105 shadow-2xl animate-glow"
+              disabled={isSpecial && selectedToppings.length === 0}
+              className={`
+                flex-1 text-white py-5 rounded-xl font-bold text-xl transition-all duration-300 shadow-2xl
+                ${isSpecial && selectedToppings.length === 0
+                  ? 'bg-gray-600 cursor-not-allowed'
+                  : 'bg-red-600 hover:bg-red-700 hover:scale-105 animate-glow'
+                }
+              `}
             >
               Add to Cart - ${totalPrice.toFixed(2)} 🍕
             </button>
