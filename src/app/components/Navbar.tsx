@@ -15,7 +15,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center space-x-3">
             <div className="relative w-12 h-12 md:w-16 md:h-16">
               <Image
-                src="/logo.png"
+                src="/logo.webp"
                 alt="Bits & Pizzas Logo"
                 fill
                 className="object-contain"

@@ -11,7 +11,7 @@ export default function Home() {
           <div className="flex justify-center mb-8">
             <div className="relative w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64">
               <Image
-                src="/logo.png"
+                src="/logo.webp"
                 alt="Bits & Pizzas Logo"
                 fill
                 className="object-contain animate-bounceIn"

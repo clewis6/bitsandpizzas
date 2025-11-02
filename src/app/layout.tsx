@@ -10,9 +10,9 @@ export const metadata: Metadata = {
   description: "The ultimate pizza experience with our famous Pizza Generator! Order online for delivery or pickup.",
   keywords: "pizza, delivery, pickup, restaurant, generator, local",
   icons: {
-    icon: '/logo.png',
-    shortcut: '/logo.png',
-    apple: '/logo.png',
+    icon: '/logo.webp',
+    shortcut: '/logo.webp',
+    apple: '/logo.webp',
   },
 };
 

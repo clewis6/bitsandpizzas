@@ -103,7 +103,7 @@ export default function Admin() {
             <div className="flex items-center space-x-4">
               <div className="relative w-12 h-12">
                 <Image
-                  src="/logo.png"
+                  src="/logo.webp"
                   alt="Bits & Pizzas Logo"
                   fill
                   className="object-contain"

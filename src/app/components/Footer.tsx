@@ -7,9 +7,9 @@ export default function Footer() {
         {/* Logo Section */}
         <div className="text-center mb-8">
           <div className="flex justify-center items-center space-x-4 mb-4">
-            <div className="relative w-12 h-12">
+            <div className="relative w-16 h-16">
               <Image
-                src="/logo.png"
+                src="/logo.webp"
                 alt="Bits & Pizzas Logo"
                 fill
                 className="object-contain"
