@@ -28,7 +28,7 @@ export default function Home() {
           </h2>
           <p className="text-xl md:text-2xl mb-12 text-gray-200 max-w-3xl mx-auto">
             From classic pepperoni to our legendary Pizza Generator creations - 
-            we've been serving up smiles and slices since 1984!
+            we&apos;ve been serving up smiles and slices since 1984! Now with online ordering for pickup!
           </p>
           
           {/* Main CTA Buttons */}
@@ -71,10 +71,10 @@ export default function Home() {
 
           {/* Feature 3 */}
           <div className="bg-gray-900 p-8 rounded-xl text-center animate-fadeIn shadow-xl">
-            <div className="text-6xl mb-4">🚚</div>
-            <h3 className="text-2xl font-bold mb-4 text-yellow-300">Fast Delivery</h3>
+            <div className="text-6xl mb-4">🏃</div>
+            <h3 className="text-2xl font-bold mb-4 text-yellow-300">Easy Pickup</h3>
             <p className="text-gray-300">
-              Hot, fresh pizzas delivered to your door in 30 minutes or less. We're faster than your ex's excuses!
+              Order online and pick up hot, fresh pizza! First time offering online ordering - making it easier than ever!
             </p>
           </div>
         </div>

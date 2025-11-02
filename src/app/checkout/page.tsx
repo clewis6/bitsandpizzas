@@ -8,9 +8,9 @@ interface OrderData {
   name: string;
   email: string;
   phone: string;
-  address: string;
-  orderType: 'delivery' | 'pickup';
+  orderType: 'pickup';
   paymentMethod: 'card' | 'cash';
+  specialInstructions?: string;
 }
 
 export default function Checkout() {
@@ -19,14 +19,14 @@ export default function Checkout() {
     name: '',
     email: '',
     phone: '',
-    address: '',
-    orderType: 'delivery',
-    paymentMethod: 'card'
+    orderType: 'pickup',
+    paymentMethod: 'cash',
+    specialInstructions: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setOrderData(prev => ({
       ...prev,
@@ -60,9 +60,8 @@ export default function Checkout() {
     }, 2000);
   };
 
-  const deliveryFee = orderData.orderType === 'delivery' ? 3.99 : 0;
-  const tax = (total + deliveryFee) * 0.08;
-  const finalTotal = total + deliveryFee + tax;
+  const tax = total * 0.08; // 8% tax
+  const finalTotal = total + tax;
 
   if (items.length === 0) {
     return (
@@ -146,12 +145,6 @@ export default function Checkout() {
                 <span className="text-gray-300">Subtotal:</span>
                 <span className="text-white">${total.toFixed(2)}</span>
               </div>
-              {deliveryFee > 0 && (
-                <div className="flex justify-between mb-2">
-                  <span className="text-gray-300">Delivery Fee:</span>
-                  <span className="text-white">${deliveryFee.toFixed(2)}</span>
-                </div>
-              )}
               <div className="flex justify-between mb-2">
                 <span className="text-gray-300">Tax (8%):</span>
                 <span className="text-white">${tax.toFixed(2)}</span>
@@ -160,6 +153,7 @@ export default function Checkout() {
                 <span>Total:</span>
                 <span>${finalTotal.toFixed(2)}</span>
               </div>
+              <p className="text-sm text-gray-400 mt-2">🏃 Pickup at 408 S Main St, Snowflake, AZ</p>
             </div>
           </div>
 
@@ -208,35 +202,30 @@ export default function Checkout() {
                 />
               </div>
 
-              {/* Order Type */}
-              <div>
-                <label className="block text-white font-bold mb-2">Order Type *</label>
-                <select
-                  name="orderType"
-                  value={orderData.orderType}
-                  onChange={handleInputChange}
-                  className="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-600 focus:border-yellow-300 focus:outline-none"
-                >
-                  <option value="delivery">🚚 Delivery (+$3.99)</option>
-                  <option value="pickup">🏃 Pickup (Free)</option>
-                </select>
+              {/* Order Type - Pickup Only */}
+              <div className="bg-yellow-300 text-black p-4 rounded-lg">
+                <div className="flex items-center justify-center space-x-2">
+                  <span className="text-2xl">🏃</span>
+                  <div>
+                    <p className="font-bold text-lg">Pickup Only</p>
+                    <p className="text-sm">We currently offer pickup service at our Snowflake location</p>
+                    <p className="text-xs mt-1">� 408 South Main Street, Snowflake, AZ 85937</p>
+                  </div>
+                </div>
               </div>
 
-              {/* Address (only for delivery) */}
-              {orderData.orderType === 'delivery' && (
-                <div>
-                  <label className="block text-white font-bold mb-2">Delivery Address *</label>
-                  <input
-                    type="text"
-                    name="address"
-                    value={orderData.address}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-600 focus:border-yellow-300 focus:outline-none"
-                    placeholder="123 Main Street, Snowflake, AZ 85937"
-                  />
-                </div>
-              )}
+              {/* Special Instructions */}
+              <div>
+                <label className="block text-white font-bold mb-2">Special Instructions (Optional)</label>
+                <textarea
+                  name="specialInstructions"
+                  value={orderData.specialInstructions}
+                  onChange={handleInputChange}
+                  className="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-600 focus:border-yellow-300 focus:outline-none"
+                  placeholder="Any special requests for your order?"
+                  rows={3}
+                />
+              </div>
 
               {/* Payment Method */}
               <div>
@@ -247,21 +236,19 @@ export default function Checkout() {
                   onChange={handleInputChange}
                   className="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-600 focus:border-yellow-300 focus:outline-none"
                 >
-                  <option value="card">💳 Credit/Debit Card</option>
-                  <option value="cash">💵 Cash (Pickup/Delivery)</option>
+                  <option value="cash">� Cash (Pay at Pickup)</option>
+                  <option value="card">� Credit/Debit Card (Pay at Pickup)</option>
                 </select>
               </div>
 
-              {/* Fake Payment Info */}
-              {orderData.paymentMethod === 'card' && (
-                <div className="bg-gray-800 p-4 rounded-lg">
-                  <p className="text-yellow-300 font-bold mb-2">💳 Card Information</p>
-                  <p className="text-gray-300 text-sm">
-                    This is a demo site - no real payment processing! 
-                    Your order will be sent to our kitchen dashboard.
-                  </p>
-                </div>
-              )}
+              {/* Payment Notice */}
+              <div className="bg-gray-800 p-4 rounded-lg">
+                <p className="text-yellow-300 font-bold mb-2">💳 Payment</p>
+                <p className="text-gray-300 text-sm">
+                  Payment will be collected when you pick up your order at our Snowflake location.
+                  This online ordering system is new - we&apos;re excited to serve you better!
+                </p>
+              </div>
 
               {/* Submit Button */}
               <button
@@ -282,15 +269,21 @@ export default function Checkout() {
                     Processing Order...
                   </span>
                 ) : (
-                  `Place Order - $${finalTotal.toFixed(2)} 🍕`
+                  `Place Order for Pickup - $${finalTotal.toFixed(2)} 🍕`
                 )}
               </button>
             </form>
 
-            {/* Demo Notice */}
+            {/* Pickup Info */}
             <div className="mt-6 bg-yellow-300 text-black p-4 rounded-lg">
-              <p className="font-bold text-center">
-                🎭 This is a demo! No real charges will be made.
+              <p className="font-bold text-center mb-2">
+                � First time offering online ordering!
+              </p>
+              <p className="text-sm text-center">
+                Pick up your order at 408 S Main Street, Snowflake, AZ 85937
+              </p>
+              <p className="text-xs text-center mt-1">
+                📞 Questions? Call us at (928) 536-4005
               </p>
             </div>
           </div>

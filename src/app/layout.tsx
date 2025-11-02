@@ -7,8 +7,8 @@ import { CartProvider } from "./components/CartContext";
 
 export const metadata: Metadata = {
   title: "Bits & Pizzas - Locally Loved for 40 Years 🍕",
-  description: "The ultimate pizza experience with our famous Pizza Generator! Order online for delivery or pickup.",
-  keywords: "pizza, delivery, pickup, restaurant, generator, local",
+  description: "The ultimate pizza experience with our famous Pizza Generator! Now offering online ordering for pickup in Snowflake, Arizona.",
+  keywords: "pizza, pickup, restaurant, generator, local, snowflake arizona",
   icons: {
     icon: '/logo.webp',
     shortcut: '/logo.webp',

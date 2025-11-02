@@ -274,6 +274,7 @@ export default function Menu() {
           </h1>
           <p className="text-xl text-gray-200 max-w-2xl mx-auto mb-4">
             Handcrafted pizzas made with love, fresh ingredients, and 40 years of perfected recipes.
+            <strong className="text-yellow-300"> Now with online ordering for pickup!</strong>
           </p>
           <div className="bg-gray-900 p-4 rounded-xl inline-block">
             <p className="text-yellow-300 font-bold">
@@ -361,11 +362,11 @@ export default function Menu() {
         {/* Info Section */}
         <div className="mt-16 grid md:grid-cols-2 gap-8">
           <div className="bg-gray-900 p-6 rounded-xl">
-            <h3 className="text-2xl font-bold mb-4 text-yellow-300">🕐 Delivery Times</h3>
+            <h3 className="text-2xl font-bold mb-4 text-yellow-300">🏃 Pickup Times</h3>
             <ul className="text-gray-300 space-y-2">
-              <li>• Standard Delivery: 25-35 minutes</li>
-              <li>• Peak Hours: 35-45 minutes</li>
-              <li>• Pickup: 15-20 minutes</li>
+              <li>• Typical pickup time: 15-20 minutes</li>
+              <li>• Peak hours: 20-30 minutes</li>
+              <li>• We&apos;ll have your order ready and hot!</li>
             </ul>
           </div>
           
