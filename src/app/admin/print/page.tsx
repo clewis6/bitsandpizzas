@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface Order {
   id: string;
@@ -21,12 +23,93 @@ interface Order {
   timestamp: string;
 }
 
+const ADMIN_PASSWORD = 'bitspizza2024';
+
+function LoginScreen({ onLogin }: { onLogin: () => void }) {
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (password === ADMIN_PASSWORD) {
+      sessionStorage.setItem('adminAuthenticated', 'true');
+      onLogin();
+      setError('');
+    } else {
+      setError('Incorrect password');
+      setPassword('');
+    }
+  };
+
+  return (
+    <div className="bg-warm-gradient min-h-screen flex items-center justify-center">
+      <div className="bg-gray-900 p-8 rounded-xl shadow-2xl max-w-md w-full mx-4">
+        <div className="text-center mb-8">
+          <div className="relative w-24 h-24 mx-auto mb-4">
+            <Image
+              src="/logo.webp"
+              alt="Bits & Pizzas Logo"
+              fill
+              className="object-contain"
+            />
+          </div>
+          <h1 className="text-3xl font-bold text-yellow-300 mb-2">
+            Print Station
+          </h1>
+          <p className="text-gray-300">Admin Access Required</p>
+        </div>
+
+        <form onSubmit={handleLogin}>
+          <div className="mb-6">
+            <label className="block text-gray-300 mb-2 font-bold">
+              Password
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-300"
+              placeholder="Enter admin password"
+              autoFocus
+            />
+            {error && (
+              <p className="text-red-400 text-sm mt-2">❌ {error}</p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-bold transition-colors"
+          >
+            🔐 Login
+          </button>
+        </form>
+
+        <div className="mt-6 text-center">
+          <Link href="/" className="text-gray-400 hover:text-yellow-300 text-sm">
+            ← Back to Home
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function PrintStation() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [lastOrderCount, setLastOrderCount] = useState(0);
   const printedOrders = useRef<Set<string>>(new Set());
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem('adminAuthenticated') === 'true';
+    }
+    return false;
+  });
 
   useEffect(() => {
+    if (!isAuthenticated) return;
+    
     const checkForNewOrders = () => {
       const stored = localStorage.getItem('orders');
       if (stored) {
@@ -63,7 +146,12 @@ export default function PrintStation() {
     const interval = setInterval(checkForNewOrders, 3000);
     
     return () => clearInterval(interval);
-  }, [lastOrderCount]);
+  }, [lastOrderCount, isAuthenticated]);
+
+  // Show login screen if not authenticated
+  if (!isAuthenticated) {
+    return <LoginScreen onLogin={() => setIsAuthenticated(true)} />;
+  }
 
   const formatTime = (timestamp: string) => {
     return new Date(timestamp).toLocaleString('en-US', {

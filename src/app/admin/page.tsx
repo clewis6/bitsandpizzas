@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface Order {
   id: string;
@@ -24,12 +25,94 @@ interface Order {
   timestamp: string;
 }
 
+const ADMIN_PASSWORD = 'bitspizza2024'; // Change this to your desired password
+
+function LoginScreen({ onLogin }: { onLogin: () => void }) {
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (password === ADMIN_PASSWORD) {
+      sessionStorage.setItem('adminAuthenticated', 'true');
+      onLogin();
+      setError('');
+    } else {
+      setError('Incorrect password');
+      setPassword('');
+    }
+  };
+
+  return (
+    <div className="bg-warm-gradient min-h-screen flex items-center justify-center">
+      <div className="bg-gray-900 p-8 rounded-xl shadow-2xl max-w-md w-full mx-4">
+        <div className="text-center mb-8">
+          <div className="relative w-24 h-24 mx-auto mb-4">
+            <Image
+              src="/logo.webp"
+              alt="Bits & Pizzas Logo"
+              fill
+              className="object-contain"
+            />
+          </div>
+          <h1 className="text-3xl font-bold text-yellow-300 mb-2">
+            Kitchen Dashboard
+          </h1>
+          <p className="text-gray-300">Admin Access Required</p>
+        </div>
+
+        <form onSubmit={handleLogin}>
+          <div className="mb-6">
+            <label className="block text-gray-300 mb-2 font-bold">
+              Password
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-300"
+              placeholder="Enter admin password"
+              autoFocus
+            />
+            {error && (
+              <p className="text-red-400 text-sm mt-2">❌ {error}</p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-bold transition-colors"
+          >
+            🔐 Login
+          </button>
+        </form>
+
+        <div className="mt-6 text-center">
+          <Link href="/" className="text-gray-400 hover:text-yellow-300 text-sm">
+            ← Back to Home
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Admin() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [selectedTab, setSelectedTab] = useState<'pending' | 'completed'>('pending');
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    // Check session storage on initial load only
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem('adminAuthenticated') === 'true';
+    }
+    return false;
+  });
 
+  // Load orders from localStorage
   useEffect(() => {
-    // Load orders from localStorage
+    if (!isAuthenticated) return;
+    
     const loadOrders = () => {
       const stored = localStorage.getItem('orders');
       if (stored) {
@@ -42,7 +125,17 @@ export default function Admin() {
     // Auto-refresh every 5 seconds
     const interval = setInterval(loadOrders, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isAuthenticated]);
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    sessionStorage.removeItem('adminAuthenticated');
+  };
+
+  // Show login screen if not authenticated
+  if (!isAuthenticated) {
+    return <LoginScreen onLogin={() => setIsAuthenticated(true)} />;
+  }
 
   const updateOrderStatus = (orderId: string, newStatus: Order['status']) => {
     const updatedOrders = orders.map(order => 
@@ -113,15 +206,23 @@ export default function Admin() {
                 Kitchen Dashboard
               </h1>
             </div>
-            <div className="text-white">
-              <div className="text-sm text-gray-300">Current Time</div>
-              <div className="text-xl font-bold">
-                {new Date().toLocaleTimeString('en-US', {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  second: '2-digit'
-                })}
+            <div className="flex items-center gap-6">
+              <div className="text-white">
+                <div className="text-sm text-gray-300">Current Time</div>
+                <div className="text-xl font-bold">
+                  {new Date().toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                  })}
+                </div>
               </div>
+              <button
+                onClick={handleLogout}
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-bold transition-colors"
+              >
+                🔒 Logout
+              </button>
             </div>
           </div>
         </div>
