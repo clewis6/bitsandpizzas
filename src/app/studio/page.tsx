@@ -71,42 +71,45 @@ export default function PizzaStudio() {
     if (!draggedTopping) return;
 
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    // Check if drop is within pizza circle
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const distance = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
     const radius = currentSize.diameter / 2;
 
-    if (distance <= radius) {
-      const newTopping: DroppedTopping = {
-        id: `${draggedTopping.id}-${Date.now()}-${Math.random()}`,
+    // Generate multiple topping instances to cover the pizza
+    const newToppings: DroppedTopping[] = [];
+    const numToppings = Math.floor(currentSize.diameter / 40); // More toppings for larger pizzas (5-10 pieces)
+
+    for (let i = 0; i < numToppings; i++) {
+      // Generate random position within pizza circle
+      const angle = Math.random() * Math.PI * 2;
+      const distance = Math.random() * (radius - 20); // Keep away from edges
+      const x = centerX + Math.cos(angle) * distance;
+      const y = centerY + Math.sin(angle) * distance;
+
+      newToppings.push({
+        id: `${draggedTopping.id}-${Date.now()}-${i}-${Math.random()}`,
         toppingId: draggedTopping.id,
         x,
         y,
         rotation: Math.random() * 360
-      };
-
-      setDroppedToppings([...droppedToppings, newTopping]);
-      setToppingCounts(prev => ({
-        ...prev,
-        [draggedTopping.id]: (prev[draggedTopping.id] || 0) + 1
-      }));
+      });
     }
+
+    setDroppedToppings([...droppedToppings, ...newToppings]);
+    setToppingCounts(prev => ({
+      ...prev,
+      [draggedTopping.id]: (prev[draggedTopping.id] || 0) + 1
+    }));
 
     setDraggedTopping(null);
   };
 
-  const removeTopping = (id: string, toppingId: string) => {
-    setDroppedToppings(droppedToppings.filter(t => t.id !== id));
+  const removeTopping = (toppingId: string) => {
+    // Remove all instances of this topping type
+    setDroppedToppings(droppedToppings.filter(t => t.toppingId !== toppingId));
     setToppingCounts(prev => {
       const newCounts = { ...prev };
-      newCounts[toppingId] = Math.max(0, (newCounts[toppingId] || 0) - 1);
-      if (newCounts[toppingId] === 0) {
-        delete newCounts[toppingId];
-      }
+      delete newCounts[toppingId];
       return newCounts;
     });
   };
@@ -159,22 +162,29 @@ export default function PizzaStudio() {
               <p className="text-gray-400 text-sm mb-4">Drag toppings onto your pizza!</p>
               
               <div className="grid grid-cols-2 gap-3">
-                {toppings.map(topping => (
-                  <div
-                    key={topping.id}
-                    draggable
-                    onDragStart={() => handleDragStart(topping)}
-                    className="bg-gray-800 p-4 rounded-lg cursor-grab active:cursor-grabbing hover:bg-gray-700 transition-all hover:scale-105"
-                  >
-                    <div className="text-4xl mb-2 text-center">{topping.icon}</div>
-                    <div className="text-white text-sm text-center">{topping.name}</div>
-                    {toppingCounts[topping.id] && (
-                      <div className="text-yellow-300 text-xs text-center mt-1 font-bold">
-                        × {toppingCounts[topping.id]}
-                      </div>
-                    )}
-                  </div>
-                ))}
+                {toppings.map(topping => {
+                  const isOnPizza = toppingCounts[topping.id] > 0;
+                  return (
+                    <div
+                      key={topping.id}
+                      draggable
+                      onDragStart={() => handleDragStart(topping)}
+                      className={`p-4 rounded-lg cursor-grab active:cursor-grabbing transition-all hover:scale-105 ${
+                        isOnPizza 
+                          ? 'bg-green-700 border-2 border-yellow-300' 
+                          : 'bg-gray-800 hover:bg-gray-700'
+                      }`}
+                    >
+                      <div className="text-4xl mb-2 text-center">{topping.icon}</div>
+                      <div className="text-white text-sm text-center">{topping.name}</div>
+                      {isOnPizza && (
+                        <div className="text-yellow-300 text-xs text-center mt-1 font-bold">
+                          ✓ On Pizza
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
 
               <div className="mt-6 p-4 bg-gray-800 rounded-lg">
@@ -260,8 +270,8 @@ export default function PizzaStudio() {
                             fontSize: '2rem',
                             filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))'
                           }}
-                          onClick={() => removeTopping(dropped.id, dropped.toppingId)}
-                          title={`Click to remove ${topping?.name}`}
+                          onClick={() => removeTopping(dropped.toppingId)}
+                          title={`Click to remove all ${topping?.name}`}
                         >
                           {topping?.icon}
                         </div>
