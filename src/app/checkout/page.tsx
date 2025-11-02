@@ -28,7 +28,7 @@ export default function Checkout() {
     email: '',
     phone: '',
     orderType: 'pickup',
-    paymentMethod: 'cash',
+    paymentMethod: 'card',
     specialInstructions: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -39,9 +39,9 @@ export default function Checkout() {
   const tax = total * 0.08; // 8% tax
   const finalTotal = total + tax;
 
-  // Create payment intent when card payment is selected
+  // Create payment intent when component loads
   useEffect(() => {
-    if (orderData.paymentMethod === 'card' && !clientSecret && finalTotal > 0) {
+    if (!clientSecret && finalTotal > 0) {
       fetch('/api/create-payment-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -51,7 +51,7 @@ export default function Checkout() {
         .then((data) => setClientSecret(data.clientSecret))
         .catch((error) => console.error('Error creating payment intent:', error));
     }
-  }, [orderData.paymentMethod, finalTotal, clientSecret]);
+  }, [finalTotal, clientSecret]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -283,51 +283,34 @@ export default function Checkout() {
                 />
               </div>
 
-              {/* Payment Method */}
-              <div>
-                <label className="block text-white font-bold mb-2">Payment Method *</label>
+              {/* Card Payment Section */}
+              <div className="bg-gray-800 p-6 rounded-lg">
+                <h3 className="text-xl font-bold text-yellow-300 mb-4">💳 Payment Information</h3>
+                <p className="text-gray-300 text-sm mb-4">
+                  Complete your payment below to confirm your order.
+                </p>
+                {clientSecret ? (
+                  <Elements stripe={stripePromise} options={{ clientSecret }}>
+                    <CardPaymentForm 
+                      onSuccess={handleCardPaymentSuccess}
+                      onCancel={() => router.push('/menu')}
+                      total={finalTotal}
+                    />
+                  </Elements>
+                ) : (
+                  <div className="text-center py-8">
+                    <div className="animate-spin text-4xl mb-4">🍕</div>
+                    <p className="text-gray-400">Loading payment form...</p>
+                  </div>
+                )}
                 <select
                   name="paymentMethod"
                   value={orderData.paymentMethod}
                   onChange={handleInputChange}
-                  className="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-600 focus:border-yellow-300 focus:outline-none"
+                  className="hidden w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-600 focus:border-yellow-300 focus:outline-none"
                 >
-                  <option value="cash">� Cash (Pay at Pickup)</option>
-                  <option value="card">� Credit/Debit Card (Pay at Pickup)</option>
                 </select>
               </div>
-
-              {/* Payment Notice */}
-              <div className="bg-gray-800 p-4 rounded-lg">
-                <p className="text-yellow-300 font-bold mb-2">💳 Payment</p>
-                <p className="text-gray-300 text-sm">
-                  Payment will be collected when you pick up your order at our Snowflake location.
-                  This online ordering system is new - we&apos;re excited to serve you better!
-                </p>
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`
-                  w-full py-4 rounded-xl text-xl font-bold transition-all duration-300
-                  ${isSubmitting 
-                    ? 'bg-gray-600 cursor-not-allowed' 
-                    : 'bg-red-600 hover:bg-red-700 hover:scale-105 animate-glow'
-                  }
-                  text-white
-                `}
-              >
-                {isSubmitting ? (
-                  <span className="flex items-center justify-center">
-                    <span className="animate-spin mr-3">🍕</span>
-                    Processing Order...
-                  </span>
-                ) : (
-                  `Place Order for Pickup - $${finalTotal.toFixed(2)} 🍕`
-                )}
-              </button>
             </form>
 
             {/* Pickup Info */}
