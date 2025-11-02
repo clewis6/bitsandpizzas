@@ -81,47 +81,42 @@ export default function PizzaCustomizer({ isOpen, onClose, pizzaName, baseId }: 
   };
 
   return (
-    <div 
-      className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4 overflow-y-auto"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) {
-          onClose();
-        }
-      }}
-    >
-      <div className="bg-gray-900 rounded-2xl max-w-4xl w-full my-8" onClick={(e) => e.stopPropagation()}>
+    <div className="fixed inset-0 bg-warm-gradient z-50 overflow-y-auto">
+      <div className="min-h-screen">
         {/* Header */}
-        <div className="bg-gray-900 border-b border-gray-700 p-6 flex justify-between items-center rounded-t-2xl">
-          <h2 className="text-3xl font-bold text-yellow-300">Customize Your {pizzaName}</h2>
-          <button
-            onClick={onClose}
-            className="text-white hover:text-red-500 text-4xl font-bold leading-none w-10 h-10 flex items-center justify-center"
-            aria-label="Close"
-          >
-            ×
-          </button>
+        <div className="bg-gray-900 border-b border-gray-700 p-6 sticky top-0 z-10 shadow-xl">
+          <div className="container mx-auto flex justify-between items-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-yellow-300">Customize Your {pizzaName}</h2>
+            <button
+              onClick={onClose}
+              className="text-white hover:text-red-500 text-4xl font-bold leading-none w-12 h-12 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700 transition-colors"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          </div>
         </div>
 
-        <div className="p-6 max-h-[70vh] overflow-y-auto">
+        <div className="container mx-auto px-4 py-8 max-w-6xl">
           {/* Size Selection */}
-          <div className="mb-8">
-            <h3 className="text-2xl font-bold text-white mb-4">1. Choose Your Size</h3>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+          <div className="mb-10">
+            <h3 className="text-3xl font-bold text-white mb-6 text-center">1. Choose Your Size</h3>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-4xl mx-auto">
               {sizes.map((size, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedSize(index)}
                   className={`
-                    p-4 rounded-xl font-bold transition-all duration-300 text-center
+                    p-6 rounded-xl font-bold transition-all duration-300 text-center
                     ${selectedSize === index
-                      ? 'bg-red-600 text-white transform scale-105 shadow-lg'
-                      : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                      ? 'bg-red-600 text-white transform scale-105 shadow-2xl ring-4 ring-yellow-300'
+                      : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:scale-105'
                     }
                   `}
                 >
-                  <div className="text-lg">{size.name}</div>
+                  <div className="text-2xl md:text-xl mb-1">{size.name}</div>
                   <div className="text-sm opacity-80">{size.size}</div>
-                  <div className="text-yellow-300 text-sm mt-1">
+                  <div className="text-yellow-300 text-lg md:text-base mt-2 font-bold">
                     ${size.basePrice.toFixed(2)}
                   </div>
                 </button>
@@ -130,24 +125,24 @@ export default function PizzaCustomizer({ isOpen, onClose, pizzaName, baseId }: 
           </div>
 
           {/* Toppings Selection */}
-          <div className="mb-8">
-            <h3 className="text-2xl font-bold text-white mb-2">
+          <div className="mb-10">
+            <h3 className="text-3xl font-bold text-white mb-3 text-center">
               2. Add Toppings ({selectedToppings.length} selected)
             </h3>
-            <p className="text-gray-400 mb-4">
+            <p className="text-gray-400 mb-6 text-center text-lg">
               ${currentSize.toppingPrice.toFixed(2)} per topping for {currentSize.name} size
             </p>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-5xl mx-auto">
               {availableToppings.map((topping) => (
                 <button
                   key={topping}
                   onClick={() => toggleTopping(topping)}
                   className={`
-                    p-3 rounded-lg font-medium transition-all duration-300
+                    p-4 rounded-lg font-medium transition-all duration-300 text-center
                     ${selectedToppings.includes(topping)
-                      ? 'bg-green-600 text-white'
-                      : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                      ? 'bg-green-600 text-white ring-2 ring-yellow-300 transform scale-105'
+                      : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:scale-105'
                     }
                   `}
                 >
@@ -159,8 +154,8 @@ export default function PizzaCustomizer({ isOpen, onClose, pizzaName, baseId }: 
           </div>
 
           {/* Price Summary */}
-          <div className="bg-gray-800 rounded-xl p-6 mb-6">
-            <h3 className="text-xl font-bold text-white mb-4">Order Summary</h3>
+          <div className="bg-gray-900 rounded-2xl p-8 mb-8 shadow-2xl max-w-3xl mx-auto">
+            <h3 className="text-2xl font-bold text-white mb-6 text-center">Order Summary</h3>
             
             <div className="space-y-2 mb-4">
               <div className="flex justify-between text-gray-300">
@@ -182,10 +177,10 @@ export default function PizzaCustomizer({ isOpen, onClose, pizzaName, baseId }: 
               )}
             </div>
             
-            <div className="border-t border-gray-600 pt-4">
+            <div className="border-t border-gray-600 pt-6 mt-6">
               <div className="flex justify-between items-center">
-                <span className="text-2xl font-bold text-yellow-300">Total:</span>
-                <span className="text-3xl font-bold text-yellow-300">
+                <span className="text-3xl font-bold text-yellow-300">Total:</span>
+                <span className="text-4xl font-bold text-yellow-300">
                   ${totalPrice.toFixed(2)}
                 </span>
               </div>
@@ -193,16 +188,16 @@ export default function PizzaCustomizer({ isOpen, onClose, pizzaName, baseId }: 
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-4">
+          <div className="flex gap-6 max-w-3xl mx-auto sticky bottom-0 bg-warm-gradient pb-8 pt-4">
             <button
               onClick={onClose}
-              className="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-4 rounded-xl font-bold text-lg transition-colors"
+              className="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-5 rounded-xl font-bold text-xl transition-colors shadow-lg"
             >
               Cancel
             </button>
             <button
               onClick={handleAddToCart}
-              className="flex-1 bg-red-600 hover:bg-red-700 text-white py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 shadow-lg"
+              className="flex-1 bg-red-600 hover:bg-red-700 text-white py-5 rounded-xl font-bold text-xl transition-all duration-300 hover:scale-105 shadow-2xl animate-glow"
             >
               Add to Cart - ${totalPrice.toFixed(2)} 🍕
             </button>
