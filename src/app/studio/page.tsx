@@ -70,9 +70,6 @@ export default function PizzaStudio() {
     e.preventDefault();
     if (!draggedTopping) return;
 
-    const rect = e.currentTarget.getBoundingClientRect();
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
     const radius = currentSize.diameter / 2;
 
     // Generate multiple topping instances to cover the pizza
@@ -80,11 +77,11 @@ export default function PizzaStudio() {
     const numToppings = Math.floor(currentSize.diameter / 40); // More toppings for larger pizzas (5-10 pieces)
 
     for (let i = 0; i < numToppings; i++) {
-      // Generate random position within pizza circle
+      // Generate random position within pizza circle (relative to pizza center at 50%, 50%)
       const angle = Math.random() * Math.PI * 2;
-      const distance = Math.random() * (radius - 20); // Keep away from edges
-      const x = centerX + Math.cos(angle) * distance;
-      const y = centerY + Math.sin(angle) * distance;
+      const distance = Math.random() * (radius - 30); // Keep away from edges
+      const x = radius + Math.cos(angle) * distance; // Center is at radius
+      const y = radius + Math.sin(angle) * distance; // Center is at radius
 
       newToppings.push({
         id: `${draggedTopping.id}-${Date.now()}-${i}-${Math.random()}`,
@@ -227,7 +224,7 @@ export default function PizzaStudio() {
               <div className="mb-6">
                 <h3 className="text-2xl font-bold text-white mb-4 text-center">Build Your Pizza</h3>
                 <div 
-                  className="relative mx-auto bg-gray-800 rounded-xl p-8"
+                  className="relative mx-auto bg-gray-800 rounded-xl flex items-center justify-center"
                   style={{ 
                     width: `${currentSize.diameter + 100}px`, 
                     height: `${currentSize.diameter + 100}px`,
@@ -238,7 +235,7 @@ export default function PizzaStudio() {
                 >
                   {/* Pizza Base */}
                   <div
-                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full shadow-2xl"
+                    className="relative rounded-full shadow-2xl"
                     style={{
                       width: `${currentSize.diameter}px`,
                       height: `${currentSize.diameter}px`,
