@@ -21,20 +21,19 @@ const pizzaSizes = [
   { name: 'XL', size: '20"', multiplier: 1.67, description: 'Party sized!', basePrice: 19.99, toppingPrice: 2.50 }
 ];
 
-// Pizza generation data
-const bases = ['Thin Crust', 'Thick Crust', 'Stuffed Crust', 'Cauliflower Crust', 'Gluten-Free'];
-const sauces = ['Tomato', 'White Garlic', 'BBQ', 'Pesto', 'Buffalo', 'Olive Oil'];
-const cheeses = ['Mozzarella', 'Cheddar', 'Goat Cheese', 'Feta', 'Provolone', 'Swiss'];
+// Pizza generation data - Using actual Bits & Pizzas menu items
+const bases = ['Traditional Crust', 'Thin Crust', 'Thick Crust'];
+const sauces = ['Tomato Sauce', 'White Garlic Sauce', 'BBQ Sauce', 'Olive Oil'];
+const cheeses = ['Mozzarella', 'Extra Mozzarella', 'Cheddar Blend'];
 
-// Combined toppings pool for random selection
+// Actual toppings available at Bits & Pizzas (from menu)
 const allToppings = [
-  'Pepperoni', 'Sausage', 'Bacon', 'Ham', 'Chicken', 'Prosciutto', 'Anchovies',
-  'Mushrooms', 'Bell Peppers', 'Onions', 'Tomatoes', 'Spinach', 'Jalapeños', 
-  'Pineapple', 'Olives', 'Arugula', 'Red Onions', 'Sun-dried Tomatoes', 
-  'Artichoke Hearts', 'Capers', 'Basil', 'Cilantro'
+  'Pepperoni', 'Sausage', 'Ground Beef', 'Ham', 'Bacon', 'Chicken',
+  'Green Chile', 'Jalapeños', 'Black Olives', 'Green Olives',
+  'Mushrooms', 'Bell Pepper', 'Pineapple', 'Tomato', 'Red Onion'
 ];
 
-const seasonings = ['Oregano', 'Basil', 'Garlic', 'Red Pepper Flakes', 'Rosemary', 'Thyme'];
+const seasonings = ['Oregano', 'Basil', 'Garlic', 'Red Pepper Flakes'];
 
 // Realistic pricing structure based on actual Bits & Pizzas menu
 // Base prices are now per-size specific from the real menu
@@ -42,16 +41,16 @@ const BASE_PRICE = 11.99; // Medium cheese pizza base price from actual menu
 const PRICE_PER_TOPPING = 1.50; // Actual per topping cost from menu
 
 const funFacts = [
-  'This combination was actually invented by a customer in 1987!',
-  'Our kitchen staff calls this the "Midnight Madness"',
-  'This pizza has a 73% reorder rate - surprisingly addictive!',
-  'Legend says this recipe came to our founder in a dream',
-  'Three food critics have rated this combination 5 stars',
-  'This was the first pizza created by our original generator in 1999',
-  'Our delivery drivers request this pizza most often',
-  'This combination has been featured in 2 food magazines',
-  'A customer once drove 200 miles just for this specific pizza',
-  'If your pizza tastes weird, blame the algorithm... or love it anyway!'
+  'This combination has been a customer favorite since our early days!',
+  'Our pizza chefs love making this unique combo',
+  'This pizza has been ordered over 100 times this year!',
+  'A local customer drives from Show Low just for this combination',
+  'This was featured on our specials board last month',
+  'Our wood-fired oven makes this combo extra delicious',
+  'Three generations of families have enjoyed this pizza',
+  'This combination pairs perfectly with our breadstix',
+  'A customer once ordered this pizza every Friday for a month!',
+  'Made fresh with love in Snowflake, Arizona since 1984!'
 ];
 
 const adjectives = ['Crazy', 'Wild', 'Epic', 'Magical', 'Legendary', 'Mysterious', 'Ultimate', 'Supreme', 'Chaotic', 'Divine'];
