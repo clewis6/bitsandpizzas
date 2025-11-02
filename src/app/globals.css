@@ -1,26 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:wght@700&family=Open+Sans:wght@400;600&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #0B0B0B;
+  --foreground: #ffffff;
+  --pizza-red: #B01C26;
+  --pizza-gold: #FFD85E;
+  --oven-black: #0B0B0B;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #0B0B0B;
+  color: white;
+}
+
+h1, h2, h3 {
+  font-family: 'Lobster Two', cursive;
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 5px #FFD85E; }
+  50% { box-shadow: 0 0 20px #FFD85E, 0 0 30px #FFD85E; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.animate-bounceIn {
+  animation: bounceIn 0.8s ease-in-out;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Custom gradient classes */
+.bg-pizza-gradient {
+  background: linear-gradient(135deg, #991b1b 0%, #0B0B0B 100%);
+}
+
+.bg-warm-gradient {
+  background: linear-gradient(135deg, #7f1d1d 0%, #0B0B0B 100%);
+}
+
+/* Custom range slider styles */
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #374151;
+  outline: none;
+  border-radius: 8px;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  background: #FFD85E;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid #B01C26;
+}
+
+.slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  background: #FFD85E;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid #B01C26;
 }
