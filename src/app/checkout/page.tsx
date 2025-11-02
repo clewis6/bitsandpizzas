@@ -277,12 +277,18 @@ export default function Checkout() {
             {/* Pickup Info */}
             <div className="mt-6 bg-yellow-300 text-black p-4 rounded-lg">
               <p className="font-bold text-center mb-2">
-                � First time offering online ordering!
+                🎉 First time offering online ordering!
               </p>
-              <p className="text-sm text-center">
+              <p className="text-sm text-center mb-2">
                 Pick up your order at 408 S Main Street, Snowflake, AZ 85937
               </p>
-              <p className="text-xs text-center mt-1">
+              <p className="text-sm text-center font-bold mb-1">
+                ⏱️ Estimated Pickup Time: 20-45 minutes
+              </p>
+              <p className="text-xs text-center">
+                (We&apos;ll call you when your order is ready!)
+              </p>
+              <p className="text-xs text-center mt-2">
                 📞 Questions? Call us at (928) 536-4005
               </p>
             </div>

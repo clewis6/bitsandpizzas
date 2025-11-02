@@ -455,9 +455,9 @@ export default function Menu() {
           <div className="bg-gray-900 p-6 rounded-xl">
             <h3 className="text-2xl font-bold mb-4 text-yellow-300">🏃 Pickup Times</h3>
             <ul className="text-gray-300 space-y-2">
-              <li>• Typical pickup time: 15-20 minutes</li>
-              <li>• Peak hours: 20-30 minutes</li>
-              <li>• We&apos;ll have your order ready and hot!</li>
+              <li>• Normal hours: 20-30 minutes</li>
+              <li>• Peak hours: 40-45 minutes</li>
+              <li>• We&apos;ll call you when your order is ready!</li>
             </ul>
           </div>
           
