@@ -121,13 +121,13 @@ const menuItems = [
     id: 'regular-breadstix',
     name: 'Regular Cinnamon Breadstix',
     description: 'Fresh baked breadstix with cinnamon',
-    price: 5.99,
+    price: 2.49,
     image: '/api/placeholder/300/200',
     isPopular: true,
     category: 'Breadstix',
     sizes: {
-      small: { price: 5.99 },
-      large: { price: 7.99 }
+      small: { price: 2.49 },
+      large: { price: 7.49 }
     }
   },
   {
