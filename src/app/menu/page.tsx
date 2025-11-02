@@ -2,183 +2,263 @@
 
 import MenuItemCard from '../components/MenuItemCard';
 
-// Real Bits & Pizzas menu data based on actual photo of menu
+// Real Bits & Pizzas menu data based on actual menu photos
 const menuItems = [
-  // Traditional Pizzas (based on visible menu prices)
+  // PIZZA - Traditional Cheese Pizza
   {
     id: '1',
-    name: 'Cheese Pizza',
-    description: 'Classic cheese pizza with our signature sauce and mozzarella. Medium $11.99 | Large $15.99',
-    price: 11.99, // Medium price from actual menu
+    name: 'Traditional Cheese Pizza',
+    description: '10" Small $9.99 | 12" Medium $11.99 | 14" Large $15.99 | 16" X-Large $17.99 | 18" Family $23.99',
+    price: 11.99,
     image: '/api/placeholder/300/200',
     isPopular: true,
-    category: 'Traditional'
+    category: 'Pizza'
   },
   {
     id: '2',
-    name: 'Each Topping', 
-    description: 'Add any topping to your pizza. Medium +$1.50 | Large +$1.99',
-    price: 1.50, // Medium topping price from actual menu
+    name: 'Each Topping',
+    description: 'Small $1.10 | Medium $1.49 | Large $1.99 | X-Large $1.99 | Family $2.49',
+    price: 1.49,
     image: '/api/placeholder/300/200',
-    category: 'Add-Ons'
+    category: 'Pizza'
   },
+  
+  // SPECIALTY PIZZAS (6 toppings)
   {
     id: '3',
-    name: 'Pepperoni Pizza',
-    description: 'Traditional pepperoni with cheese and our signature sauce.',
-    price: 13.49, // Cheese + pepperoni topping
+    name: 'Specialty Pizza',
+    description: 'Choice of 6 toppings. 10" Small $14.99 | 12" Medium $18.49 | 14" Large $21.99 | 16" X-Large $23.99',
+    price: 18.49,
     image: '/api/placeholder/300/200',
-    isPopular: true,
-    category: 'Traditional'
+    category: 'Specialty Pizzas'
   },
+  
+  // PIZZA BY THE SLICE
   {
     id: '4',
-    name: 'Meat Lovers Pizza',
-    description: 'Loaded with pepperoni, sausage, ham, and bacon. A carnivore\'s dream!',
-    price: 17.99, // Based on specialty pizza pricing from photo
+    name: 'Pizza By the Slice',
+    description: 'Single slice of cheese pizza - perfect for a quick bite!',
+    price: 3.50,
     image: '/api/placeholder/300/200',
     isPopular: true,
-    category: 'Specialty'
+    category: 'Pizza'
   },
   {
     id: '5',
-    name: 'Vegetarian Supreme',
-    description: 'Fresh vegetables including peppers, onions, mushrooms, olives, and tomatoes.',
-    price: 16.99, // Based on specialty pricing
-    image: '/api/placeholder/300/200',
-    category: 'Specialty'
-  },
-  {
-    id: '6',
-    name: 'Supreme Pizza',
-    description: 'The works! Pepperoni, sausage, peppers, onions, mushrooms, olives.',
-    price: 18.99, // Premium specialty pricing
-    image: '/api/placeholder/300/200',
-    category: 'Specialty'
-  },
-  // Breadstix (visible on menu)
-  {
-    id: '7',
-    name: 'Breadstix',
-    description: 'Fresh baked breadsticks with garlic butter and marinara sauce.',
-    price: 5.99, // Based on menu photo
+    name: 'Lunch Special',
+    description: 'One slice and a small drink',
+    price: 5.00,
     image: '/api/placeholder/300/200',
     isPopular: true,
-    category: 'Appetizers'
+    category: 'Daily Specials'
+  },
+
+  // SPECIALTY PIZZAS - Named varieties
+  {
+    id: '6',
+    name: 'Bits Chicken Wing Pizza (5 toppings)',
+    description: 'Chicken and Bacon, your choice BBQ or Hot! 12" Medium $14.99 | 14" Large $18.99 | 16" X-Large $19.99',
+    price: 14.99,
+    image: '/api/placeholder/300/200',
+    isPopular: true,
+    category: 'Specialty Pizzas'
+  },
+  {
+    id: '7',
+    name: 'Meat Lovers Pizza (6 toppings)',
+    description: 'Pepperoni, Ham, Sausage, Ground Beef. 12" Medium $15.99 | 14" Large $19.99 | 16" X-Large $22.99 | 18" Family $26.49',
+    price: 15.99,
+    image: '/api/placeholder/300/200',
+    isPopular: true,
+    category: 'Specialty Pizzas'
   },
   {
     id: '8',
-    name: 'Cheese Breadstix',
-    description: 'Our famous breadsticks topped with melted mozzarella cheese.',
-    price: 6.99, // Upgrade from regular breadstix
+    name: 'Vegetarian Pizza (6 toppings)',
+    description: 'Black Olives, Green Olives, Red Onion, Bell Pepper, Tomatoes, Mushrooms. 12" Medium $15.99 | 14" Large $19.99 | 16" X-Large $22.99 | 18" Family $26.49',
+    price: 15.99,
     image: '/api/placeholder/300/200',
-    category: 'Appetizers'
+    category: 'Specialty Pizzas'
   },
-  // Wings (visible on menu)
   {
     id: '9',
-    name: 'Hot Wings',
-    description: 'Spicy buffalo wings served with ranch dipping sauce.',
-    price: 8.99, // From menu photo
+    name: 'Supreme Pizza (8 toppings)',
+    description: 'Pepperoni, Ham, Sausage, Ground Beef, Black Olives, Green Olives, Bell Pepper, Mushrooms. 12" Medium $17.99 | 14" Large $21.99 | 16" X-Large $24.99 | 18" Family $29.99',
+    price: 17.99,
     image: '/api/placeholder/300/200',
-    category: 'Wings'
+    isPopular: true,
+    category: 'Specialty Pizzas'
   },
+  
+  // TOPPINGS
   {
     id: '10',
-    name: 'BBQ Wings',
-    description: 'Tangy BBQ glazed wings with your choice of dipping sauce.',
-    price: 8.99,
+    name: 'Available Toppings',
+    description: 'Pepperoni, Sausage, Ground Beef, Ham, Bacon, Chicken, Green Chile, Jalapeños, Black Olives, Green Olives, Mushrooms, Bell Pepper, Pineapple, Tomato, Red Onion, Mushrooms',
+    price: 0,
     image: '/api/placeholder/300/200',
-    category: 'Wings'
+    category: 'Pizza'
   },
+
+  // WINGS
   {
     id: '11',
-    name: 'Teriyaki Wings',
-    description: 'Sweet teriyaki glazed wings - customer favorite!',
-    price: 9.49, // Slight premium for teriyaki
+    name: 'Hot Wings (Sauce: BBQ or Teriyaki)',
+    description: 'Delicious wings with your choice of sauce.',
+    price: 1.40,
     image: '/api/placeholder/300/200',
+    isPopular: true,
     category: 'Wings'
   },
-  // Salads (visible on menu)
+
+  // BREADSTIX
   {
     id: '12',
-    name: 'Tossed Green Salad',
-    description: 'Fresh mixed greens with tomatoes, cucumbers, and your choice of dressing.',
-    price: 2.49, // From menu photo
+    name: 'Regular Cinnamon Breadstix',
+    description: 'Small $5.99 | Large $7.99',
+    price: 5.99,
     image: '/api/placeholder/300/200',
-    category: 'Salads'
+    isPopular: true,
+    category: 'Breadstix'
   },
   {
     id: '13',
-    name: 'Zesty Chef Salad',
-    description: 'Mixed greens topped with ham, turkey, cheese, tomatoes, and vegetables.',
-    price: 4.99, // From menu photo
+    name: 'Cheese Breadstix',
+    description: 'Small $8.99 | Large $10.99',
+    price: 8.99,
+    image: '/api/placeholder/300/200',
+    category: 'Breadstix'
+  },
+
+  // SALADS
+  {
+    id: '14',
+    name: 'Tossed Green Salad',
+    description: 'Fresh mixed greens with vegetables.',
+    price: 3.99,
     image: '/api/placeholder/300/200',
     category: 'Salads'
   },
-  // Beverages (visible on menu)
-  {
-    id: '14',
-    name: 'Soda Bar',
-    description: 'All-you-can-drink fountain beverages including Coca-Cola products.',
-    price: 1.89, // From menu photo
-    image: '/api/placeholder/300/200',
-    category: 'Beverages'
-  },
-  // Daily Specials (visible on menu board)
   {
     id: '15',
-    name: 'Monday Special',
-    description: 'Family Size, One Item Pizza - Great for families!',
-    price: 14.49, // From daily specials board
+    name: 'Zesty Chef Salad',
+    description: 'Loaded with meats, cheese, and fresh vegetables.',
+    price: 9.49,
     image: '/api/placeholder/300/200',
-    category: 'Daily Specials'
+    category: 'Salads'
   },
+
+  // SUBS
   {
     id: '16',
-    name: 'Tuesday Special', 
-    description: 'Medium Specialty Pizza with Extra Large One Item Pizza.',
-    price: 19.49, // From daily specials board
+    name: 'New York Special Sub',
+    description: 'Pepperoni, Ham, Salami and Sausage. Small $7.99 | Large $9.99',
+    price: 7.99,
     image: '/api/placeholder/300/200',
-    category: 'Daily Specials'
+    category: 'Subs'
   },
   {
     id: '17',
-    name: 'Wednesday Special',
-    description: 'Two Medium One Item Pizzas - Perfect for sharing!',
-    price: 14.49, // From daily specials board
+    name: 'Ham, Salami, or Pepperoni Sub',
+    description: 'Your choice of meat. Small $6.99 | Large $8.99',
+    price: 6.99,
     image: '/api/placeholder/300/200',
-    category: 'Daily Specials'
+    category: 'Subs'
   },
+
+  // CALZONES
   {
     id: '18',
-    name: 'Thursday Special',
-    description: 'Extra Large One Item Pizza - Feeds the whole family!',
-    price: 13.49, // From daily specials board
+    name: 'Calzone',
+    description: 'Choice of 3 Toppings',
+    price: 7.99,
     image: '/api/placeholder/300/200',
-    category: 'Daily Specials'
+    category: 'Calzones'
   },
+
+  // PIZZA BOAT
   {
     id: '19',
-    name: 'Friday Special',
-    description: 'Family Size One Item Pizza - End the week right!',
-    price: 14.49, // From daily specials board
+    name: 'Pizza Boat',
+    description: 'Like our personal size pizza but in a boat! Choice of 2 Toppings',
+    price: 7.99,
+    image: '/api/placeholder/300/200',
+    category: 'Pizza Boat'
+  },
+
+  // RIP & DIP
+  {
+    id: '20',
+    name: 'Rip & Dip',
+    description: 'Choice of 1 Topping',
+    price: 7.99,
+    image: '/api/placeholder/300/200',
+    category: 'Rip & Dip'
+  },
+
+  // SODA BAR
+  {
+    id: '21',
+    name: 'Soda Bar',
+    description: 'Small $1.39 | Medium $1.69 | Large $1.99 | X-Large $2.19 | Commercial Mug $0.99 | 20 oz. Sodas $3.39 | 2 Liter Sodas $3.99',
+    price: 1.69,
+    image: '/api/placeholder/300/200',
+    category: 'Beverages'
+  },
+
+  // DAILY SPECIALS (from board in photo)
+  {
+    id: '22',
+    name: 'Monday Special',
+    description: 'Family Size One Item Pizza',
+    price: 18.99,
     image: '/api/placeholder/300/200',
     category: 'Daily Specials'
   },
   {
-    id: '20',
-    name: 'Daily Lunch Special',
-    description: 'Slice of Pizza and a Drink - Perfect quick lunch!',
-    price: 2.00, // From menu board
+    id: '23',
+    name: 'Tuesday Special',
+    description: 'Medium Supreme Pizza and an Ex-Large One Item Pizza',
+    price: 32.99,
     image: '/api/placeholder/300/200',
-    isPopular: true,
+    category: 'Daily Specials'
+  },
+  {
+    id: '24',
+    name: 'Wednesday Special',
+    description: 'Two Medium One Item Pizzas',
+    price: 18.99,
+    image: '/api/placeholder/300/200',
+    category: 'Daily Specials'
+  },
+  {
+    id: '25',
+    name: 'Thursday Special',
+    description: 'Ex-Large One Item Pizza',
+    price: 16.99,
+    image: '/api/placeholder/300/200',
+    category: 'Daily Specials'
+  },
+  {
+    id: '26',
+    name: 'Friday Special',
+    description: 'Family Size One Item Pizza',
+    price: 18.99,
+    image: '/api/placeholder/300/200',
+    category: 'Daily Specials'
+  },
+  {
+    id: '27',
+    name: 'Saturday Special',
+    description: 'Ex-Large One Item Pizza',
+    price: 16.99,
+    image: '/api/placeholder/300/200',
     category: 'Daily Specials'
   }
 ];
 
 export default function Menu() {
-  const categories = ['Traditional', 'Specialty', 'Appetizers', 'Wings', 'Salads', 'Beverages', 'Daily Specials'];
+  const categories = ['Pizza', 'Specialty Pizzas', 'Wings', 'Breadstix', 'Salads', 'Subs', 'Calzones', 'Pizza Boat', 'Rip & Dip', 'Beverages', 'Daily Specials'];
   
   const getItemsByCategory = (category: string) => {
     return menuItems.filter(item => item.category === category);
