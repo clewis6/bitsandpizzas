@@ -16,9 +16,10 @@ const sauceOptions = [
 ];
 
 const sizes = [
-  { id: 0, name: 'Medium', size: '12"', basePrice: 14.99 },
-  { id: 1, name: 'Large', size: '14"', basePrice: 18.99 },
-  { id: 2, name: 'X-Large', size: '16"', basePrice: 19.99 }
+  { id: 0, name: 'Small', size: '10"', basePrice: 11.99 },
+  { id: 1, name: 'Medium', size: '12"', basePrice: 14.99 },
+  { id: 2, name: 'Large', size: '14"', basePrice: 16.99 },
+  { id: 3, name: 'X-Large', size: '16"', basePrice: 18.99 }
 ];
 
 export default function SpecialtyPizzaSauceCustomizer({ 

@@ -20,9 +20,9 @@ interface Size {
 }
 
 const sizes: Size[] = [
-  { name: 'Small', size: '10"', basePrice: 9.99, toppingPrice: 1.10 },
-  { name: 'Medium', size: '12"', basePrice: 11.99, toppingPrice: 1.49 },
-  { name: 'Large', size: '14"', basePrice: 15.99, toppingPrice: 1.99 },
+  { name: 'Small', size: '10"', basePrice: 7.99, toppingPrice: 1.10 },
+  { name: 'Medium', size: '12"', basePrice: 9.99, toppingPrice: 1.49 },
+  { name: 'Large', size: '14"', basePrice: 13.99, toppingPrice: 1.99 },
   { name: 'X-Large', size: '16"', basePrice: 17.99, toppingPrice: 1.99 },
   { name: 'Family', size: '18"', basePrice: 23.99, toppingPrice: 2.49 }
 ];

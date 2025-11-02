@@ -21,9 +21,9 @@ interface DroppedTopping {
 }
 
 const sizes = [
-  { id: 0, name: 'Small', size: '10"', basePrice: 9.99, diameter: 200, toppingPrice: 1.10 },
-  { id: 1, name: 'Medium', size: '12"', basePrice: 11.99, diameter: 260, toppingPrice: 1.49 },
-  { id: 2, name: 'Large', size: '14"', basePrice: 15.99, diameter: 320, toppingPrice: 1.99 },
+  { id: 0, name: 'Small', size: '10"', basePrice: 7.99, diameter: 200, toppingPrice: 1.10 },
+  { id: 1, name: 'Medium', size: '12"', basePrice: 9.99, diameter: 260, toppingPrice: 1.49 },
+  { id: 2, name: 'Large', size: '14"', basePrice: 13.99, diameter: 320, toppingPrice: 1.99 },
   { id: 3, name: 'X-Large', size: '16"', basePrice: 17.99, diameter: 360, toppingPrice: 1.99 },
   { id: 4, name: 'Family', size: '18"', basePrice: 23.99, diameter: 400, toppingPrice: 2.49 }
 ];

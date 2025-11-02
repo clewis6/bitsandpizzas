@@ -9,14 +9,14 @@ const menuItems = [
     id: 'cheese-pizza',
     name: 'Traditional Cheese Pizza',
     description: 'Classic cheese pizza with our signature sauce and mozzarella',
-    price: 9.99,
+    price: 7.99,
     image: '/api/placeholder/300/200',
     isPopular: true,
     category: 'Pizza',
     sizes: {
-      small: { size: '10"', price: 9.99 },
-      medium: { size: '12"', price: 11.99 },
-      large: { size: '14"', price: 15.99 },
+      small: { size: '10"', price: 7.99 },
+      medium: { size: '12"', price: 9.99 },
+      large: { size: '14"', price: 13.99 },
       xlarge: { size: '16"', price: 17.99 },
       family: { size: '18"', price: 23.99 }
     }
@@ -49,58 +49,59 @@ const menuItems = [
     id: 'bits-chicken-wing',
     name: 'Bits Chicken Wing Pizza',
     description: 'Chicken and Bacon, your choice BBQ or Hot! (5 toppings)',
-    price: 14.99,
+    price: 11.99,
     image: '/api/placeholder/300/200',
     isPopular: true,
     category: 'Specialty Pizzas',
     sizes: {
+      small: { size: '10"', price: 11.99 },
       medium: { size: '12"', price: 14.99 },
-      large: { size: '14"', price: 18.99 },
-      xlarge: { size: '16"', price: 19.99 }
+      large: { size: '14"', price: 16.99 },
+      xlarge: { size: '16"', price: 18.99 }
     }
   },
   {
     id: 'meat-lovers',
     name: 'Meat Lovers Pizza',
     description: 'Pepperoni, Ham, Sausage, Ground Beef (6 toppings)',
-    price: 15.99,
+    price: 13.99,
     image: '/api/placeholder/300/200',
     isPopular: true,
     category: 'Specialty Pizzas',
     sizes: {
-      medium: { size: '12"', price: 15.99 },
-      large: { size: '14"', price: 19.99 },
-      xlarge: { size: '16"', price: 22.99 },
-      family: { size: '18"', price: 26.49 }
+      small: { size: '10"', price: 13.99 },
+      medium: { size: '12"', price: 16.99 },
+      large: { size: '14"', price: 22.99 },
+      xlarge: { size: '16"', price: 26.49 }
     }
   },
   {
     id: 'vegetarian',
     name: 'Vegetarian Pizza',
     description: 'Black Olives, Green Olives, Red Onion, Bell Pepper, Tomatoes, Mushrooms (6 toppings)',
-    price: 15.99,
+    price: 13.99,
     image: '/api/placeholder/300/200',
     category: 'Specialty Pizzas',
     sizes: {
-      medium: { size: '12"', price: 15.99 },
-      large: { size: '14"', price: 19.99 },
-      xlarge: { size: '16"', price: 22.99 },
-      family: { size: '18"', price: 26.49 }
+      small: { size: '10"', price: 13.99 },
+      medium: { size: '12"', price: 16.99 },
+      large: { size: '14"', price: 22.99 },
+      xlarge: { size: '16"', price: 26.49 }
     }
   },
   {
     id: 'supreme',
     name: 'Supreme Pizza',
     description: 'Pepperoni, Ham, Sausage, Ground Beef, Black Olives, Green Olives, Bell Pepper, Mushrooms (8 toppings)',
-    price: 17.99,
+    price: 13.99,
     image: '/api/placeholder/300/200',
     isPopular: true,
     category: 'Specialty Pizzas',
     sizes: {
-      medium: { size: '12"', price: 17.99 },
-      large: { size: '14"', price: 21.99 },
-      xlarge: { size: '16"', price: 24.99 },
-      family: { size: '18"', price: 29.99 }
+      small: { size: '10"', price: 13.99 },
+      medium: { size: '12"', price: 16.99 },
+      large: { size: '14"', price: 22.99 },
+      xlarge: { size: '16"', price: 26.49 }
     }
   },
 
