@@ -24,15 +24,34 @@ export function usePeakHours() {
         const response = await fetch('/api/orders?hours=1');
         const data = await response.json();
         
-        const isPeakTime = data.count > 10;
+        // Calculate estimated time based on order volume
+        let estimatedTime = '20-30 minutes';
+        let isPeakTime = false;
+        
+        if (data.count >= 15) {
+          estimatedTime = '45-50 minutes';
+          isPeakTime = true;
+        } else if (data.count >= 10) {
+          estimatedTime = '40-45 minutes';
+          isPeakTime = true;
+        } else if (data.count >= 6) {
+          estimatedTime = '30-35 minutes';
+          isPeakTime = false;
+        } else if (data.count >= 3) {
+          estimatedTime = '25-30 minutes';
+          isPeakTime = false;
+        } else {
+          estimatedTime = '20-25 minutes';
+          isPeakTime = false;
+        }
         
         setStatus({
           isPeak: isPeakTime,
           orderCount: data.count,
-          estimatedTime: isPeakTime ? '40-45 minutes' : '20-30 minutes',
+          estimatedTime: estimatedTime,
           loading: false
         });
-      } catch (error) {
+      } catch {
         // Fallback to default if API fails
         setStatus({
           isPeak: false,
@@ -45,8 +64,8 @@ export function usePeakHours() {
 
     checkPeakStatus();
     
-    // Refresh every 5 minutes
-    const interval = setInterval(checkPeakStatus, 5 * 60 * 1000);
+    // Refresh every 2 minutes for more accurate estimates
+    const interval = setInterval(checkPeakStatus, 2 * 60 * 1000);
     
     return () => clearInterval(interval);
   }, []);

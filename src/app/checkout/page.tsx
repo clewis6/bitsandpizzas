@@ -325,11 +325,11 @@ export default function Checkout() {
                       🔥 We&apos;re busy right now! ({peakStatus.orderCount} recent orders)
                     </p>
                   )}
+                  <p className="text-xs text-center mt-2 text-gray-700">
+                    Please arrive at the estimated time shown above
+                  </p>
                 </>
               )}
-              <p className="text-xs text-center">
-                (We&apos;ll call you when your order is ready!)
-              </p>
               <p className="text-xs text-center mt-2">
                 📞 Questions? Call us at (928) 536-4005
               </p>
