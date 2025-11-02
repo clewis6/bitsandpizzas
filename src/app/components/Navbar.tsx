@@ -36,6 +36,12 @@ export default function Navbar() {
               Menu
             </Link>
             <Link 
+              href="/studio" 
+              className="hover:text-yellow-300 transition-colors font-medium text-lg"
+            >
+              Pizza Studio 🧑‍🍳
+            </Link>
+            <Link 
               href="/generator" 
               className="hover:text-yellow-300 transition-colors font-medium text-lg"
             >
@@ -74,6 +80,13 @@ export default function Navbar() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Menu
+              </Link>
+              <Link 
+                href="/studio" 
+                className="hover:text-yellow-300 transition-colors font-medium text-lg"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Pizza Studio 🧑‍🍳
               </Link>
               <Link 
                 href="/generator" 
