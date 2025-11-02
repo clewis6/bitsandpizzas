@@ -31,8 +31,6 @@ export default function Checkout() {
     paymentMethod: 'card',
     specialInstructions: ''
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showCardPayment, setShowCardPayment] = useState(false);
   const [clientSecret, setClientSecret] = useState('');
   const router = useRouter();
   
@@ -61,12 +59,9 @@ export default function Checkout() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
+  const handleCardPaymentSuccess = async () => {
     try {
-      // Submit order to backend API
+      // Submit order to backend API after successful payment
       const response = await fetch('/api/orders', {
         method: 'POST',
         headers: {
@@ -81,14 +76,14 @@ export default function Checkout() {
           })),
           total: finalTotal,
           specialInstructions: orderData.specialInstructions,
-          paymentMethod: orderData.paymentMethod
+          paymentMethod: 'card'
         })
       });
 
       const result = await response.json();
 
       if (result.success) {
-        // Also store in localStorage for admin dashboard
+        // Store in localStorage for admin dashboard
         const order = {
           id: result.orderNumber,
           items,
@@ -102,21 +97,13 @@ export default function Checkout() {
         localStorage.setItem('orders', JSON.stringify([order, ...existingOrders]));
 
         clearCart();
-        setIsSubmitting(false);
         router.push('/admin');
       } else {
         alert('Failed to submit order. Please try again or call us at (928) 536-4005');
-        setIsSubmitting(false);
       }
     } catch {
       alert('Error submitting order. Please call us at (928) 536-4005');
-      setIsSubmitting(false);
     }
-  };
-
-  const handleCardPaymentSuccess = async () => {
-    // After card payment succeeds, submit the order
-    await handleSubmit(new Event('submit') as unknown as React.FormEvent);
   };
 
   if (items.length === 0) {
@@ -217,7 +204,7 @@ export default function Checkout() {
           <div className="bg-gray-900 rounded-2xl p-8">
             <h2 className="text-3xl font-bold text-yellow-300 mb-6">Order Details</h2>
             
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-6">
               {/* Contact Info */}
               <div>
                 <label className="block text-white font-bold mb-2">Name *</label>
@@ -303,15 +290,8 @@ export default function Checkout() {
                     <p className="text-gray-400">Loading payment form...</p>
                   </div>
                 )}
-                <select
-                  name="paymentMethod"
-                  value={orderData.paymentMethod}
-                  onChange={handleInputChange}
-                  className="hidden w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-600 focus:border-yellow-300 focus:outline-none"
-                >
-                </select>
               </div>
-            </form>
+            </div>
 
             {/* Pickup Info */}
             <div className="mt-6 bg-yellow-300 text-black p-4 rounded-lg">
